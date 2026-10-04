@@ -1,0 +1,2895 @@
+{
+  "components": {
+    "schemas": {
+      "AcordAddress": {
+        "additionalProperties": false,
+        "description": "NGDS address block. ISO 3166-2 subdivision codes are required for US.",
+        "properties": {
+          "city": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "default": "US",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Country",
+            "type": "string"
+          },
+          "line1": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Line1",
+            "type": "string"
+          },
+          "line2": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line2"
+          },
+          "postal_code": {
+            "description": "US ZIP / ZIP+4",
+            "pattern": "^\\d{5}(-\\d{4})?$",
+            "title": "Postal Code",
+            "type": "string"
+          },
+          "state": {
+            "description": "US state or territory code, e.g. 'NY'.",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "postal_code"
+        ],
+        "title": "Address",
+        "type": "object"
+      },
+      "AcordBeneficiaryAllocation": {
+        "additionalProperties": false,
+        "description": "Beneficiary share with the multi-signature approval state.",
+        "properties": {
+          "approval_did": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "W3C DID of the approving credential holder.",
+            "title": "Approval Did"
+          },
+          "approved": {
+            "default": false,
+            "title": "Approved",
+            "type": "boolean"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Approved At"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "Relationship",
+            "type": "string"
+          },
+          "share_percent": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Share Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship",
+          "share_percent"
+        ],
+        "title": "BeneficiaryAllocation",
+        "type": "object"
+      },
+      "AcordContact": {
+        "additionalProperties": false,
+        "description": "Contact point per NGDS party model.",
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "maxLength": 254,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Email"
+          },
+          "preferred_channel": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Channel"
+          },
+          "telephone": {
+            "anyOf": [
+              {
+                "pattern": "^\\+?[0-9]{10,15}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Telephone"
+          }
+        },
+        "title": "Contact",
+        "type": "object"
+      },
+      "AcordCoverage": {
+        "additionalProperties": false,
+        "description": "A single coverage/rider on a policy.",
+        "properties": {
+          "benefit_period_months": {
+            "anyOf": [
+              {
+                "maximum": 11,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Months"
+          },
+          "benefit_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Years"
+          },
+          "coverage_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Coverage Id",
+            "type": "string"
+          },
+          "coverage_type": {
+            "$ref": "#/$defs/CoverageType"
+          },
+          "face_amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Face Amount"
+          },
+          "is_guaranteed": {
+            "default": true,
+            "title": "Is Guaranteed",
+            "type": "boolean"
+          },
+          "is_rider": {
+            "default": false,
+            "title": "Is Rider",
+            "type": "boolean"
+          },
+          "premium_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium Period Years"
+          },
+          "premium_to_age": {
+            "anyOf": [
+              {
+                "maximum": 120,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium To Age"
+          },
+          "rate_class": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rate Class"
+          },
+          "waiting_period_months": {
+            "anyOf": [
+              {
+                "maximum": 60,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Waiting Period Months"
+          }
+        },
+        "required": [
+          "coverage_id",
+          "coverage_type"
+        ],
+        "title": "Coverage",
+        "type": "object"
+      },
+      "AcordLifeEvent": {
+        "additionalProperties": false,
+        "description": "A policy or coverage level event (issue, change, lapse, surrender...).",
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Amount"
+          },
+          "effective_date": {
+            "format": "date",
+            "title": "Effective Date",
+            "type": "string"
+          },
+          "event_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Event Type",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          },
+          "source_system": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source System"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "active"
+          }
+        },
+        "required": [
+          "event_id",
+          "event_type",
+          "effective_date"
+        ],
+        "title": "LifeEvent",
+        "type": "object"
+      },
+      "AcordPerson": {
+        "additionalProperties": false,
+        "description": "An individual party. ``ssn_last4`` only - full SSNs never transit this suite.",
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Address"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "contact": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Contact"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "date_of_birth": {
+            "format": "date",
+            "title": "Date Of Birth",
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "First Name",
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/$defs/Gender",
+            "default": "U"
+          },
+          "last_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Last Name",
+            "type": "string"
+          },
+          "middle_name": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Middle Name"
+          },
+          "party_id": {
+            "description": "Carrier-assigned party identifier.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "preferred_language": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Language"
+          },
+          "ssn_last4": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ssn Last4"
+          },
+          "suffix": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Suffix"
+          },
+          "tobacco_use": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required for mortality-rated life products.",
+            "title": "Tobacco Use"
+          }
+        },
+        "required": [
+          "party_id",
+          "first_name",
+          "last_name",
+          "date_of_birth"
+        ],
+        "title": "Person",
+        "type": "object"
+      },
+      "AcordPolicy": {
+        "additionalProperties": false,
+        "description": "The canonical life/annuity contract record.",
+        "properties": {
+          "annualised_premium": {
+            "default": 0.0,
+            "minimum": 0,
+            "title": "Annualised Premium",
+            "type": "number"
+          },
+          "coverages": {
+            "items": {
+              "$ref": "#/$defs/Coverage"
+            },
+            "title": "Coverages",
+            "type": "array"
+          },
+          "currency": {
+            "default": "USD",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/$defs/LifeEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "expiration_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expiration Date"
+          },
+          "face_amount": {
+            "description": "Sum assured / accumulation value base.",
+            "minimum": 0,
+            "title": "Face Amount",
+            "type": "number"
+          },
+          "issue_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Issue Date"
+          },
+          "lob": {
+            "default": "Life",
+            "description": "Line of business label.",
+            "maxLength": 40,
+            "title": "Lob",
+            "type": "string"
+          },
+          "master_group": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Master Group"
+          },
+          "parties": {
+            "items": {
+              "$ref": "#/$defs/RoleAssignment"
+            },
+            "title": "Parties",
+            "type": "array"
+          },
+          "payment_mode": {
+            "$ref": "#/$defs/PaymentMode",
+            "default": "monthly"
+          },
+          "policy_id": {
+            "description": "Carrier policy number.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "product_code": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Product Code",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "state_of_issue": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "State Of Issue",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "quoted"
+          },
+          "total_face_amount": {
+            "default": 0.0,
+            "description": "Aggregate face amount.",
+            "minimum": 0,
+            "title": "Total Face Amount",
+            "type": "number"
+          },
+          "valuation_method": {
+            "$ref": "#/$defs/ValuationMethod",
+            "default": "modifiedActuarial"
+          }
+        },
+        "required": [
+          "policy_id",
+          "product_id",
+          "product_code",
+          "face_amount",
+          "state_of_issue"
+        ],
+        "title": "Policy",
+        "type": "object"
+      },
+      "AcordRoleAssignment": {
+        "additionalProperties": false,
+        "description": "Binds a party to a contract in a specific role.",
+        "properties": {
+          "benefit_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Percent"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "#/$defs/Relationship"
+          },
+          "share_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Share Percent"
+          },
+          "term_years": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Term Years"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship"
+        ],
+        "title": "RoleAssignment",
+        "type": "object"
+      },
+      "AcordTransactionEnvelope": {
+        "additionalProperties": true,
+        "description": "The NGDS ``ACORD`` request/response envelope.\n\nLayout follows the standard's ``requestMessage`` / ``responseMessage``\nstructure: a header, an optional status block and one or more content\nobjects, plus vendor extensions carried under ``Extension``.",
+        "properties": {
+          "ACORDVersion": {
+            "default": "NGDS-LA-6.0",
+            "title": "Acordversion",
+            "type": "string"
+          },
+          "BusinessAreaCode": {
+            "default": "01",
+            "title": "Businessareacode",
+            "type": "string"
+          },
+          "Content": {
+            "additionalProperties": true,
+            "title": "Content",
+            "type": "object"
+          },
+          "Extension": {
+            "additionalProperties": true,
+            "title": "Extension",
+            "type": "object"
+          },
+          "MessageDateTime": {
+            "description": "ISO-8601 timestamp. NGDS uses UTC with an explicit offset.",
+            "title": "Messagedatetime",
+            "type": "string"
+          },
+          "MessageID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Messageid",
+            "type": "string"
+          },
+          "ReceiverID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Receiverid",
+            "type": "string"
+          },
+          "SecurityLevel": {
+            "default": 1,
+            "maximum": 9,
+            "minimum": 0,
+            "title": "Securitylevel",
+            "type": "integer"
+          },
+          "SenderID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Senderid",
+            "type": "string"
+          },
+          "StandardVersion": {
+            "default": "6.0.0",
+            "title": "Standardversion",
+            "type": "string"
+          },
+          "Status": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Status"
+          },
+          "TestMode": {
+            "default": false,
+            "title": "Testmode",
+            "type": "boolean"
+          },
+          "TransactionSet": {
+            "default": "TX",
+            "title": "Transactionset",
+            "type": "string"
+          },
+          "TransactionTypeCode": {
+            "maxLength": 8,
+            "minLength": 5,
+            "title": "Transactiontypecode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "SenderID",
+          "ReceiverID",
+          "MessageID",
+          "TransactionTypeCode",
+          "MessageDateTime"
+        ],
+        "title": "TransactionEnvelope",
+        "type": "object"
+      },
+      "ErrorCatalogEntry": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "type": "integer"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "httpStatus",
+          "title",
+          "description",
+          "retryable"
+        ],
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Problem": {
+        "description": "RFC 9457 problem details with the PAS error catalogue.",
+        "properties": {
+          "catalog_description": {
+            "type": "string"
+          },
+          "code": {
+            "examples": [
+              "PAS-400-VALIDATION"
+            ],
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "errors": {
+            "additionalProperties": true,
+            "description": "Field-level validation detail, when applicable.",
+            "type": "object"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "status": {
+            "maximum": 599,
+            "minimum": 100,
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "code"
+        ],
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "description": "Development and service API key. Not for production traffic.",
+        "in": "header",
+        "name": "X-API-Key",
+        "type": "apiKey"
+      },
+      "oauth2_authorization_code_pkce": {
+        "description": "Interactive user login with PKCE.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://id.pas.example/authorize",
+            "refreshUrl": "https://id.pas.example/token",
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "oauth2_client_credentials": {
+        "description": "Machine-to-machine access for service accounts.",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "tenantHeader": {
+        "description": "Tenant identifier header. The resolved tenant is compared against the token's tenant claim; a mismatch is rejected before routing.",
+        "in": "header",
+        "name": "PAS_TENANT_HEADER",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "AI-Ready API Gateway & MCP Orchestrator. Decomposes a carrier's monolithic, proprietary Policy Administration APIs into atomic OpenAPI 3.1 operations, translates them live to each vendor's dialect, exposes them over the Model Context Protocol for AI agents, and orchestrates them into business workflows with retries and compensation.\n\n**Problem.** Legacy PAS APIs are monolithic, use proprietary DSLs and are not discoverable by AI agents. An agent cannot call an operation it cannot discover, describe or authorise separately - which is why 90% of carriers' AI pilots stall at the integration layer rather than at the model.\n\nEvery atomic operation is exposed three ways with one definition: as a REST endpoint (`/insurance/v1/...`), as an MCP tool over streamable HTTP at `/mcp`, and as a catalogued entry at `/operations`. The OpenAPI document is generated from the same declarations, so the spec cannot drift from behaviour.",
+    "title": "plugin1 - PAS Plugins",
+    "version": "1.0.0",
+    "x-acord-ngds": {
+      "sourceRef": "https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards",
+      "standardVersion": "6.0.0",
+      "transactionCodes": 40
+    },
+    "x-mcp": {
+      "path": "/mcp",
+      "server": "pas-policy-operations",
+      "toolCount": 28,
+      "transport": "streamable-http"
+    },
+    "x-pas-atomic-operations": 21,
+    "x-pas-plugin": "plugin1",
+    "x-pas-plugin-version": "1.0.0",
+    "x-pas-suite-version": "1.0.0",
+    "x-security-schemes": [
+      "oauth2_authorization_code_pkce",
+      "oauth2_client_credentials",
+      "apiKey"
+    ]
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/acord/ngds": {
+      "get": {
+        "description": "ACORD NGDS transaction code registry for Life and Annuity business.",
+        "operationId": "platform.acordRegistry",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordregistry",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS reference",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/acord/schemas": {
+      "get": {
+        "description": "Draft 2020-12 JSON Schemas for every canonical NGDS entity.",
+        "operationId": "platform.acordSchemas",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordschemas",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS JSON Schemas",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/errors/catalog": {
+      "get": {
+        "description": "The full, stable error code catalogue so clients can branch on codes.",
+        "operationId": "platform.errorCatalog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Errorcatalog",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Published error catalogue",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Liveness probe. Never touches the database so it cannot produce a false negative.",
+        "operationId": "platform.health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Health",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe: checks that the tenant registry and MCP server are usable.",
+        "operationId": "platform.ready",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Ready",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/insurance/v1/applications": {
+      "post": {
+        "description": "Submits an application into the carrier's underwriting queue. Plugin 3's workbench calls this after triage; direct API clients call it when they want the carrier's own underwriter rather than an automated decision.",
+        "operationId": "application.submit",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Submit an application for underwriting"
+          }
+        },
+        "summary": "Submit an application for underwriting",
+        "tags": [
+          "operations",
+          "application"
+        ],
+        "x-pas-acord-tx-type": "TX-101",
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION",
+          "PAS-400-BUSINESS_RULE",
+          "PAS-502-PAS_UNAVAILABLE"
+        ],
+        "x-pas-intent": "Start underwriting on a new application",
+        "x-pas-required-scopes": [
+          "application:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1500
+      }
+    },
+    "/insurance/v1/applications/{applicationId}": {
+      "get": {
+        "description": "Retrieve an application",
+        "operationId": "application.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "title": "Applicationid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Retrieve an application"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve an application",
+        "tags": [
+          "operations",
+          "application"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND"
+        ],
+        "x-pas-intent": "Check the underwriting status and outstanding requirements",
+        "x-pas-required-scopes": [
+          "application:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 600
+      }
+    },
+    "/insurance/v1/policies": {
+      "post": {
+        "description": "Issues a policy. Requires an accepted quote; the workflow in plugin 1 validates eligibility, underwriting status and funding before calling this operation. Always send an Idempotency-Key: a retried bind against a live PAS would otherwise create a second policy.",
+        "operationId": "policy.bind",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Bind a policy from a quote"
+          }
+        },
+        "summary": "Bind a policy from a quote",
+        "tags": [
+          "operations",
+          "policy",
+          "quote",
+          "issue"
+        ],
+        "x-pas-acord-tx-type": "TX-105",
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION",
+          "PAS-422-QUOTE_NOT_ACCEPTABLE",
+          "PAS-400-BUSINESS_RULE",
+          "PAS-502-PAS_UNAVAILABLE",
+          "PAS-409-IDEMPOTENCY"
+        ],
+        "x-pas-intent": "Convert an accepted quote into an issued, in-force policy",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 2000
+      }
+    },
+    "/insurance/v1/policies/premium/calculate": {
+      "post": {
+        "description": "Pure rating computation. Nothing is written to the carrier's records, so it is safe for an agent to call speculatively while exploring options. Returns the rating-factor breakdown so an underwriter can challenge individual components.",
+        "operationId": "policy.premium.calculate",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Calculate a premium"
+          }
+        },
+        "summary": "Calculate a premium",
+        "tags": [
+          "operations",
+          "quote",
+          "rating"
+        ],
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION",
+          "PAS-502-PAS_UNAVAILABLE"
+        ],
+        "x-pas-intent": "Price a hypothetical policy without creating anything",
+        "x-pas-required-scopes": [
+          "policy:rate"
+        ],
+        "x-pas-side": "compute",
+        "x-pas-slo-ms": 800
+      }
+    },
+    "/insurance/v1/policies/search": {
+      "post": {
+        "description": "Paginated search across the caller's tenant. Filters are explicit and combinable; omitted filters match everything.",
+        "operationId": "policy.search",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Search policies"
+          }
+        },
+        "summary": "Search policies",
+        "tags": [
+          "operations",
+          "policy"
+        ],
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION"
+        ],
+        "x-pas-intent": "List policies matching a filter, for reconciliation and reporting",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 2000
+      }
+    },
+    "/insurance/v1/policies/{policyId}": {
+      "get": {
+        "description": "Returns the full canonical policy record. This is the single read that an agent should use to understand a policy; it never mutates anything and is safe to call repeatedly.",
+        "operationId": "policy.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Retrieve a policy"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve a policy",
+        "tags": [
+          "operations",
+          "policy"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-404-PAS_OPERATION"
+        ],
+        "x-pas-intent": "Read the current state of one policy by policy number",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 1000
+      }
+    },
+    "/insurance/v1/policies/{policyId}/beneficiaries": {
+      "get": {
+        "description": "List beneficiaries",
+        "operationId": "policy.beneficiary.list",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "List beneficiaries"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List beneficiaries",
+        "tags": [
+          "operations",
+          "beneficiary",
+          "policy"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND"
+        ],
+        "x-pas-intent": "See the current beneficiary schedule and signature state",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 700
+      },
+      "put": {
+        "description": "Replaces the whole beneficiary schedule (PUT semantics - not a delta). Shares may total less than 100 percent, in which case the remainder stays with the existing default beneficiary; they may never exceed 100 percent. With requireAllSignatures the change is staged pending counter-signature and is committed to the plugin 7 ledger once every party has signed.",
+        "operationId": "policy.beneficiary.update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Replace the beneficiary schedule"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Replace the beneficiary schedule",
+        "tags": [
+          "operations",
+          "beneficiary",
+          "policy"
+        ],
+        "x-pas-acord-tx-type": "TX-118",
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-400-BUSINESS_RULE",
+          "PAS-403-PERMISSION_DENIED"
+        ],
+        "x-pas-intent": "Change who receives the death benefit",
+        "x-pas-required-scopes": [
+          "policy:write",
+          "beneficiary:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1800
+      }
+    },
+    "/insurance/v1/policies/{policyId}/cash-value": {
+      "post": {
+        "description": "Returns the three figures a surrender conversation needs, and can project them forward. netCashValue is cashValue less any outstanding policy loan.",
+        "operationId": "policy.cashValue.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Project cash value"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Project cash value",
+        "tags": [
+          "operations",
+          "policy",
+          "financial"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-400-VALIDATION"
+        ],
+        "x-pas-intent": "Read cash, surrender and net cash values for a policy",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "compute",
+        "x-pas-slo-ms": 1200
+      }
+    },
+    "/insurance/v1/policies/{policyId}/events": {
+      "get": {
+        "description": "Ordered lifecycle events: issue, changes, premium status changes, lapse, reinstatement, surrender. Correlates with the plugin 7 ledger history.",
+        "operationId": "policy.history.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "required": false,
+            "schema": {
+              "default": "2026-01-01",
+              "title": "Since",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Read policy event history"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Read policy event history",
+        "tags": [
+          "operations",
+          "policy",
+          "history"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND"
+        ],
+        "x-pas-intent": "See every lifecycle event recorded against a policy",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 1500
+      }
+    },
+    "/insurance/v1/policies/{policyId}/lapse": {
+      "post": {
+        "description": "Moves the policy to 'lapsed'. The request must carry confirmation=true: policy-state changes are irreversible in most cores, and an agent must state its intent explicitly rather than firing a mutation by side effect.",
+        "operationId": "policy.lapse",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Lapse a policy"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Lapse a policy",
+        "tags": [
+          "operations",
+          "servicing",
+          "policy"
+        ],
+        "x-pas-acord-tx-type": "TX-120",
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-400-BUSINESS_RULE",
+          "PAS-409-VERSION_CONFLICT"
+        ],
+        "x-pas-intent": "Move an in-force policy to lapsed status",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1500
+      }
+    },
+    "/insurance/v1/policies/{policyId}/loans": {
+      "post": {
+        "description": "Advances cash against the policy's surrender value. The PAS enforces the maximum loan percentage and the free-look restriction on new policies.",
+        "operationId": "policy.loan.request",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Request a policy loan"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Request a policy loan",
+        "tags": [
+          "operations",
+          "policy",
+          "financial"
+        ],
+        "x-pas-acord-tx-type": "TX-116",
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION",
+          "PAS-404-NOT_FOUND",
+          "PAS-400-BUSINESS_RULE"
+        ],
+        "x-pas-intent": "Borrow against a policy's cash value",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1600
+      }
+    },
+    "/insurance/v1/policies/{policyId}/reinstate": {
+      "post": {
+        "description": "Moves the policy to 'active'. The request must carry confirmation=true: policy-state changes are irreversible in most cores, and an agent must state its intent explicitly rather than firing a mutation by side effect.",
+        "operationId": "policy.reinstate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Reinstate a policy"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reinstate a policy",
+        "tags": [
+          "operations",
+          "servicing",
+          "policy"
+        ],
+        "x-pas-acord-tx-type": "TX-120",
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-400-BUSINESS_RULE"
+        ],
+        "x-pas-intent": "Return a lapsed policy to active status",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1500
+      }
+    },
+    "/insurance/v1/policies/{policyId}/status": {
+      "get": {
+        "description": "A cheap status probe. Use this instead of `policy.get` when the status is the only thing needed - it is materially faster on a loaded PAS.",
+        "operationId": "policy.status.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Read policy status"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Read policy status",
+        "tags": [
+          "operations",
+          "policy"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND"
+        ],
+        "x-pas-intent": "Check only the current status of a policy",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 400
+      }
+    },
+    "/insurance/v1/policies/{policyId}/surrender": {
+      "post": {
+        "description": "Moves the policy to 'surrendered'. The request must carry confirmation=true: policy-state changes are irreversible in most cores, and an agent must state its intent explicitly rather than firing a mutation by side effect.",
+        "operationId": "policy.surrender",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Surrender a policy"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Surrender a policy",
+        "tags": [
+          "operations",
+          "servicing",
+          "policy"
+        ],
+        "x-pas-acord-tx-type": "TX-106",
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-400-BUSINESS_RULE",
+          "PAS-409-VERSION_CONFLICT",
+          "PAS-502-PAS_UNAVAILABLE"
+        ],
+        "x-pas-intent": "Surrender an in-force policy for its cash surrender value",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1500
+      }
+    },
+    "/insurance/v1/policies/{policyId}/terminate": {
+      "post": {
+        "description": "Moves the policy to 'terminated'. The request must carry confirmation=true: policy-state changes are irreversible in most cores, and an agent must state its intent explicitly rather than firing a mutation by side effect.",
+        "operationId": "policy.terminate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policyId",
+            "required": true,
+            "schema": {
+              "title": "Policyid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Terminate a policy"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Terminate a policy",
+        "tags": [
+          "operations",
+          "servicing",
+          "policy"
+        ],
+        "x-pas-acord-tx-type": "TX-106",
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND",
+          "PAS-403-PERMISSION_DENIED",
+          "PAS-400-BUSINESS_RULE"
+        ],
+        "x-pas-intent": "Terminate a policy without a cash payout, e.g. on underwriting grounds",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 1500
+      }
+    },
+    "/insurance/v1/products": {
+      "get": {
+        "description": "List available products",
+        "operationId": "product.search",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "productType",
+            "required": false,
+            "schema": {
+              "title": "Producttype",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "List available products"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List available products",
+        "tags": [
+          "operations",
+          "product"
+        ],
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION"
+        ],
+        "x-pas-intent": "Discover which products a carrier will currently sell",
+        "x-pas-required-scopes": [
+          "product:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 600
+      }
+    },
+    "/insurance/v1/products/{productCode}": {
+      "get": {
+        "description": "Issue ages, face-amount bounds, riders and filed states. This is what an agent should read before quoting a product it has not seen before.",
+        "operationId": "product.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productCode",
+            "required": true,
+            "schema": {
+              "title": "Productcode",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Retrieve a product definition"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve a product definition",
+        "tags": [
+          "operations",
+          "product"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND"
+        ],
+        "x-pas-intent": "Read what a product is and what it allows",
+        "x-pas-required-scopes": [
+          "product:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 500
+      }
+    },
+    "/insurance/v1/quotes": {
+      "get": {
+        "description": "List recent quotes",
+        "operationId": "policy.quote.list",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "quoted",
+              "title": "Status",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "List recent quotes"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List recent quotes",
+        "tags": [
+          "operations",
+          "quote"
+        ],
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION"
+        ],
+        "x-pas-intent": "Find quotes created recently, for conversion reporting",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 800
+      },
+      "post": {
+        "description": "Creates a bindable quote with a validity window. Re-sending the same Idempotency-Key returns the original quote rather than creating a duplicate. An accepted quote is the only legal input to `policy.bind`.",
+        "operationId": "policy.quote.create",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Create a quote"
+          }
+        },
+        "summary": "Create a quote",
+        "tags": [
+          "operations",
+          "quote"
+        ],
+        "x-pas-acord-tx-type": "TX-101",
+        "x-pas-error-codes": [
+          "PAS-400-VALIDATION",
+          "PAS-422-QUOTE_NOT_ACCEPTABLE",
+          "PAS-409-CONFLICT"
+        ],
+        "x-pas-intent": "Persist a price that can later be converted into a policy",
+        "x-pas-required-scopes": [
+          "policy:write"
+        ],
+        "x-pas-side": "write",
+        "x-pas-slo-ms": 900
+      }
+    },
+    "/insurance/v1/quotes/{quoteId}": {
+      "get": {
+        "description": "Retrieve a quote",
+        "operationId": "policy.quote.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "quoteId",
+            "required": true,
+            "schema": {
+              "title": "Quoteid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Retrieve a quote"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve a quote",
+        "tags": [
+          "operations",
+          "quote"
+        ],
+        "x-pas-error-codes": [
+          "PAS-404-NOT_FOUND"
+        ],
+        "x-pas-intent": "Read back a previously created quote",
+        "x-pas-required-scopes": [
+          "policy:read"
+        ],
+        "x-pas-side": "read",
+        "x-pas-slo-ms": 400
+      }
+    },
+    "/mcp/catalogue": {
+      "get": {
+        "description": "Tools, resources and prompts this plugin exposes over MCP.\n\nAn agent that cannot speak MCP can still read this document and call the\nequivalent REST endpoints.",
+        "operationId": "platform.mcpCatalogue",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpcatalogue",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP discovery document",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/stats": {
+      "get": {
+        "operationId": "platform.mcpStats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpstats",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP tool invocation statistics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/tools": {
+      "get": {
+        "description": "The exact tool list an MCP client would discover, as JSON.",
+        "operationId": "mcp.listTools",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Mcp.Listtools",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP tool catalogue",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/metrics": {
+      "get": {
+        "description": "Prometheus text exposition format.",
+        "operationId": "platform.metrics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Prometheus metrics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics/snapshot": {
+      "get": {
+        "description": "Metric snapshot used by the Svelte management UI when Prometheus is not reachable.",
+        "operationId": "platform.metricsSnapshot",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Metricssnapshot",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "In-process metric snapshot",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/operations": {
+      "get": {
+        "description": "Every atomic operation the gateway exposes for this carrier.\n\nThis is the machine-readable inventory an agent or integrator reads first.",
+        "operationId": "catalogue.listOperations",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tag"
+            }
+          },
+          {
+            "in": "query",
+            "name": "side",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Side"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Search"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Catalogue.Listoperations",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Atomic operation catalogue",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/operations/{operation_id}": {
+      "get": {
+        "description": "Full contract for one operation: parameters, schemas, examples, errors.",
+        "operationId": "catalogue.describeOperation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "operation_id",
+            "required": true,
+            "schema": {
+              "title": "Operation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Catalogue.Describeoperation",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Atomic operation detail",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/orchestration/stats": {
+      "get": {
+        "operationId": "workflow.stats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Workflow.Stats",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Workflow engine statistics",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/pas/health": {
+      "get": {
+        "description": "Probe the tenant's connected PAS and report what this gateway can do with it.",
+        "operationId": "pas.tenantHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Pas.Tenanthealth",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "PAS connectivity",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/pas/translation/preview": {
+      "post": {
+        "description": "Show how a payload would be rewritten for the carrier's vendor dialect.",
+        "operationId": "pas.translationPreview",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Pas.Translationpreview",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Preview a vendor translation",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/pas/translation/rules": {
+      "get": {
+        "description": "The loaded vendor translation profiles, as configuration.",
+        "operationId": "pas.translationRules",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Pas.Translationrules",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Translation rules per vendor",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/pas/vendors": {
+      "get": {
+        "description": "Vendor capability matrix - transport, API style, idempotency support.",
+        "operationId": "pas.listVendors",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Pas.Listvendors",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Supported PAS vendors",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/pas/vendors/{vendor}/health": {
+      "get": {
+        "operationId": "pas.health",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "vendor",
+            "required": true,
+            "schema": {
+              "title": "Vendor",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Pas.Health",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "PAS connectivity probe",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/plugin": {
+      "get": {
+        "description": "Identity, problem statement and commercial model for this plugin.",
+        "operationId": "gateway.pluginInfo",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Gateway.Plugininfo",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Plugin metadata",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/tenants": {
+      "get": {
+        "description": "Tenants visible to the caller. Cross-tenant reads are refused, not just hidden.",
+        "operationId": "platform.listTenants",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Listtenants",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tenant registry",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/version": {
+      "get": {
+        "description": "Version, enabled plugins and the connected PAS vendors.",
+        "operationId": "platform.version",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Version",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Build and capability information",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/workflows": {
+      "get": {
+        "description": "Every business workflow the gateway can orchestrate, with its step graph.",
+        "operationId": "workflow.list",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Workflow.List",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List orchestrable workflows",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/workflows/executions/{execution_id}": {
+      "get": {
+        "description": "The step-by-step trace of one execution, for diagnosing a failure.",
+        "operationId": "workflow.execution",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "execution_id",
+            "required": true,
+            "schema": {
+              "title": "Execution Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Workflow.Execution",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Read a workflow execution",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/workflows/{workflow_id}": {
+      "get": {
+        "description": "One workflow's steps, execution order and compensating actions.",
+        "operationId": "workflow.get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workflow_id",
+            "required": true,
+            "schema": {
+              "title": "Workflow Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Workflow.Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workflow detail",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    },
+    "/workflows/{workflow_id}/executions": {
+      "post": {
+        "description": "Start a workflow and return the execution with its full step trace.",
+        "operationId": "workflow.start",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workflow_id",
+            "required": true,
+            "schema": {
+              "title": "Workflow Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Workflow.Start",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Start a workflow execution",
+        "tags": [
+          "orchestration"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_authorization_code_pkce": [],
+      "tenantHeader": []
+    },
+    {
+      "oauth2_client_credentials": [],
+      "tenantHeader": []
+    },
+    {
+      "apiKey": [],
+      "tenantHeader": []
+    }
+  ],
+  "tags": [
+    {
+      "description": "Atomic policy administration operations",
+      "name": "operations"
+    },
+    {
+      "description": "Business workflows over atomic operations",
+      "name": "orchestration"
+    },
+    {
+      "description": "Health, discovery and governance",
+      "name": "platform"
+    }
+  ]
+}

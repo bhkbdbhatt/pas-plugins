@@ -1,0 +1,1484 @@
+{
+  "name": "7 - Policy Ledger",
+  "description": "Generated from plugin7 - PAS Plugins by scripts/generate_postman.py. Do not edit by hand; regenerate instead.\n\nDefault port: 8007. Set `baseUrl` to http://localhost:8007.",
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8007"
+    },
+    {
+      "key": "tenantId",
+      "value": "demo-carrier"
+    }
+  ],
+  "item": [
+    {
+      "name": "Read operations",
+      "item": [
+        {
+          "name": "ACORD NGDS reference",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/ngds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "ngds"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS reference"
+          },
+          "response": []
+        },
+        {
+          "name": "ACORD NGDS JSON Schemas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/schemas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "schemas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS JSON Schemas"
+          },
+          "response": []
+        },
+        {
+          "name": "Committed blocks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/blocks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "blocks"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Committed blocks"
+          },
+          "response": []
+        },
+        {
+          "name": "Claim state",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/claims/:claim_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "claims",
+                ":claim_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "claim_id",
+                  "value": "CL-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Claim state"
+          },
+          "response": []
+        },
+        {
+          "name": "Merkle inclusion proof for an event",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/events/:event_id/proof",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "events",
+                ":event_id",
+                "proof"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "event_id",
+                  "value": "EV-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Merkle inclusion proof for an event"
+          },
+          "response": []
+        },
+        {
+          "name": "Ledger inventory",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/health/detailed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "health",
+                "detailed"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Ledger inventory"
+          },
+          "response": []
+        },
+        {
+          "name": "Resolve a DID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/identity/:did",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "identity",
+                ":did"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "did",
+                  "value": "did:key:zExample",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Resolve a DID"
+          },
+          "response": []
+        },
+        {
+          "name": "Network participants and channel",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/network",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "network"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Network participants and channel"
+          },
+          "response": []
+        },
+        {
+          "name": "List policies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "List policies"
+          },
+          "response": []
+        },
+        {
+          "name": "Policy state",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Policy state"
+          },
+          "response": []
+        },
+        {
+          "name": "Reconstruct an annuity position",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/annuity-position",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "annuity-position"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Reconstruct an annuity position"
+          },
+          "response": []
+        },
+        {
+          "name": "Full policy history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "history"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Full policy history"
+          },
+          "response": []
+        },
+        {
+          "name": "Chaincode transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Chaincode transactions"
+          },
+          "response": []
+        },
+        {
+          "name": "Audit the chain",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/verify",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "verify"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Audit the chain"
+          },
+          "response": []
+        },
+        {
+          "name": "Published error catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/errors/catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "errors",
+                "catalog"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Published error catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Liveness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Liveness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Readiness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health",
+                "ready"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Readiness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP discovery document",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/catalogue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "catalogue"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP discovery document"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP tool invocation statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP tool invocation statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Prometheus metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Prometheus metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "In-process metric snapshot",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics/snapshot",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics",
+                "snapshot"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "In-process metric snapshot"
+          },
+          "response": []
+        },
+        {
+          "name": "Tenant registry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Tenant registry"
+          },
+          "response": []
+        },
+        {
+          "name": "Build and capability information",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "version"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Build and capability information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mutating operations",
+      "item": [
+        {
+          "name": "Record an annuity payout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/annuity-entries/:entry_id/pay",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "annuity-entries",
+                ":entry_id",
+                "pay"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "entry_id",
+                  "value": "ANN-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nRecord an annuity payout"
+          },
+          "response": []
+        },
+        {
+          "name": "Apply an approved beneficiary change",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/beneficiary-changes/:request_id/apply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "beneficiary-changes",
+                ":request_id",
+                "apply"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "request_id",
+                  "value": "BC-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nApply an approved beneficiary change"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve a beneficiary change",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/beneficiary-changes/:request_id/endorse",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "beneficiary-changes",
+                ":request_id",
+                "endorse"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "request_id",
+                  "value": "BC-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nApprove a beneficiary change"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve and pay a claim",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/claims/:claim_id/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "claims",
+                ":claim_id",
+                "approve"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "claim_id",
+                  "value": "CL-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nApprove and pay a claim"
+          },
+          "response": []
+        },
+        {
+          "name": "Decline a claim",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/claims/:claim_id/decline",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "claims",
+                ":claim_id",
+                "decline"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "claim_id",
+                  "value": "CL-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nDecline a claim"
+          },
+          "response": []
+        },
+        {
+          "name": "Issue a verifiable credential",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/identity/credentials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "identity",
+                "credentials"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nIssue a verifiable credential"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify a verifiable credential",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/identity/credentials/verify",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "identity",
+                "credentials",
+                "verify"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nVerify a verifiable credential"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify a portability package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/packages/verify",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "packages",
+                "verify"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nVerify a portability package"
+          },
+          "response": []
+        },
+        {
+          "name": "Create a policy and commit its issue event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nCreate a policy and commit its issue event"
+          },
+          "response": []
+        },
+        {
+          "name": "Generate an annuity drawdown schedule",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/annuity-schedule",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "annuity-schedule"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nGenerate an annuity drawdown schedule"
+          },
+          "response": []
+        },
+        {
+          "name": "Propose a beneficiary change",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/beneficiary-changes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "beneficiary-changes"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nPropose a beneficiary change"
+          },
+          "response": []
+        },
+        {
+          "name": "File a claim",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/claims",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "claims"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nFile a claim"
+          },
+          "response": []
+        },
+        {
+          "name": "Submit a lifecycle event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "events"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nSubmit a lifecycle event"
+          },
+          "response": []
+        },
+        {
+          "name": "Export a self-verifying portability package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/blockchain/v1/policies/:policy_id/export",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "blockchain",
+                "v1",
+                "policies",
+                ":policy_id",
+                "export"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policy_id",
+                  "value": "sample-policy_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nExport a self-verifying portability package"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

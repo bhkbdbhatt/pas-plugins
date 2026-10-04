@@ -1,0 +1,1801 @@
+{
+  "name": "1 - PAS Gateway",
+  "description": "Generated from plugin1 - PAS Plugins by scripts/generate_postman.py. Do not edit by hand; regenerate instead.\n\nDefault port: 8001. Set `baseUrl` to http://localhost:8001.",
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8001"
+    },
+    {
+      "key": "tenantId",
+      "value": "demo-carrier"
+    }
+  ],
+  "item": [
+    {
+      "name": "Read operations",
+      "item": [
+        {
+          "name": "ACORD NGDS reference",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/ngds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "ngds"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS reference"
+          },
+          "response": []
+        },
+        {
+          "name": "ACORD NGDS JSON Schemas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/schemas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "schemas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS JSON Schemas"
+          },
+          "response": []
+        },
+        {
+          "name": "Published error catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/errors/catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "errors",
+                "catalog"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Published error catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Liveness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Liveness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Readiness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health",
+                "ready"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Readiness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve an application",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/applications/:applicationId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "applications",
+                ":applicationId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "sample-applicationId",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieve an application"
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve a policy",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieve a policy"
+          },
+          "response": []
+        },
+        {
+          "name": "List beneficiaries",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/beneficiaries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "beneficiaries"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "List beneficiaries"
+          },
+          "response": []
+        },
+        {
+          "name": "Read policy event history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "since",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Read policy event history"
+          },
+          "response": []
+        },
+        {
+          "name": "Read policy status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "status"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Read policy status"
+          },
+          "response": []
+        },
+        {
+          "name": "List available products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "productType",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "List available products"
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve a product definition",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/products/:productCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "products",
+                ":productCode"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "productCode",
+                  "value": "sample-productCode",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieve a product definition"
+          },
+          "response": []
+        },
+        {
+          "name": "List recent quotes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/quotes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "quotes"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "List recent quotes"
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve a quote",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/quotes/:quoteId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "quotes",
+                ":quoteId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "quoteId",
+                  "value": "QT00000000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieve a quote"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP discovery document",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/catalogue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "catalogue"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP discovery document"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP tool invocation statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP tool invocation statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP tool catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/tools",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "tools"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP tool catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Prometheus metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Prometheus metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "In-process metric snapshot",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics/snapshot",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics",
+                "snapshot"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "In-process metric snapshot"
+          },
+          "response": []
+        },
+        {
+          "name": "Atomic operation catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/operations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "operations"
+              ],
+              "query": [
+                {
+                  "key": "tag",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "side",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "search",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Atomic operation catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Atomic operation detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/operations/:operation_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "operations",
+                ":operation_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "operation_id",
+                  "value": "sample-operation_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Atomic operation detail"
+          },
+          "response": []
+        },
+        {
+          "name": "Workflow engine statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orchestration/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orchestration",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Workflow engine statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "PAS connectivity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/pas/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pas",
+                "health"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "PAS connectivity"
+          },
+          "response": []
+        },
+        {
+          "name": "Translation rules per vendor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/pas/translation/rules",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pas",
+                "translation",
+                "rules"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Translation rules per vendor"
+          },
+          "response": []
+        },
+        {
+          "name": "Supported PAS vendors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/pas/vendors",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pas",
+                "vendors"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Supported PAS vendors"
+          },
+          "response": []
+        },
+        {
+          "name": "PAS connectivity probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/pas/vendors/:vendor/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pas",
+                "vendors",
+                ":vendor",
+                "health"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "vendor",
+                  "value": "sample-vendor",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "PAS connectivity probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Plugin metadata",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/plugin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plugin"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Plugin metadata"
+          },
+          "response": []
+        },
+        {
+          "name": "Tenant registry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Tenant registry"
+          },
+          "response": []
+        },
+        {
+          "name": "Build and capability information",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "version"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Build and capability information"
+          },
+          "response": []
+        },
+        {
+          "name": "List orchestrable workflows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "List orchestrable workflows"
+          },
+          "response": []
+        },
+        {
+          "name": "Read a workflow execution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/executions/:execution_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                "executions",
+                ":execution_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "execution_id",
+                  "value": "EXEC-0001",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Read a workflow execution"
+          },
+          "response": []
+        },
+        {
+          "name": "Workflow detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/:workflow_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                ":workflow_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "workflow_id",
+                  "value": "wf-onboarding",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Workflow detail"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mutating operations",
+      "item": [
+        {
+          "name": "Submit an application for underwriting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "applications"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nSubmit an application for underwriting"
+          },
+          "response": []
+        },
+        {
+          "name": "Bind a policy from a quote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nBind a policy from a quote"
+          },
+          "response": []
+        },
+        {
+          "name": "Calculate a premium",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/premium/calculate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                "premium",
+                "calculate"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nCalculate a premium"
+          },
+          "response": []
+        },
+        {
+          "name": "Search policies",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                "search"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nSearch policies"
+          },
+          "response": []
+        },
+        {
+          "name": "Replace the beneficiary schedule",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/beneficiaries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "beneficiaries"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nReplace the beneficiary schedule"
+          },
+          "response": []
+        },
+        {
+          "name": "Project cash value",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/cash-value",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "cash-value"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nProject cash value"
+          },
+          "response": []
+        },
+        {
+          "name": "Lapse a policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/lapse",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "lapse"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nLapse a policy"
+          },
+          "response": []
+        },
+        {
+          "name": "Request a policy loan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/loans",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "loans"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nRequest a policy loan"
+          },
+          "response": []
+        },
+        {
+          "name": "Reinstate a policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/reinstate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "reinstate"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nReinstate a policy"
+          },
+          "response": []
+        },
+        {
+          "name": "Surrender a policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/surrender",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "surrender"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nSurrender a policy"
+          },
+          "response": []
+        },
+        {
+          "name": "Terminate a policy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/policies/:policyId/terminate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "policies",
+                ":policyId",
+                "terminate"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "policyId",
+                  "value": "pol-0000000000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nTerminate a policy"
+          },
+          "response": []
+        },
+        {
+          "name": "Create a quote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insurance/v1/quotes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insurance",
+                "v1",
+                "quotes"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nCreate a quote"
+          },
+          "response": []
+        },
+        {
+          "name": "Preview a vendor translation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/pas/translation/preview",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pas",
+                "translation",
+                "preview"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nPreview a vendor translation"
+          },
+          "response": []
+        },
+        {
+          "name": "Start a workflow execution",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workflows/:workflow_id/executions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workflows",
+                ":workflow_id",
+                "executions"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "workflow_id",
+                  "value": "wf-onboarding",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nStart a workflow execution"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

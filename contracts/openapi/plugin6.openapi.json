@@ -1,0 +1,2223 @@
+{
+  "components": {
+    "schemas": {
+      "AcordAddress": {
+        "additionalProperties": false,
+        "description": "NGDS address block. ISO 3166-2 subdivision codes are required for US.",
+        "properties": {
+          "city": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "default": "US",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Country",
+            "type": "string"
+          },
+          "line1": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Line1",
+            "type": "string"
+          },
+          "line2": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line2"
+          },
+          "postal_code": {
+            "description": "US ZIP / ZIP+4",
+            "pattern": "^\\d{5}(-\\d{4})?$",
+            "title": "Postal Code",
+            "type": "string"
+          },
+          "state": {
+            "description": "US state or territory code, e.g. 'NY'.",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "postal_code"
+        ],
+        "title": "Address",
+        "type": "object"
+      },
+      "AcordBeneficiaryAllocation": {
+        "additionalProperties": false,
+        "description": "Beneficiary share with the multi-signature approval state.",
+        "properties": {
+          "approval_did": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "W3C DID of the approving credential holder.",
+            "title": "Approval Did"
+          },
+          "approved": {
+            "default": false,
+            "title": "Approved",
+            "type": "boolean"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Approved At"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "Relationship",
+            "type": "string"
+          },
+          "share_percent": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Share Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship",
+          "share_percent"
+        ],
+        "title": "BeneficiaryAllocation",
+        "type": "object"
+      },
+      "AcordContact": {
+        "additionalProperties": false,
+        "description": "Contact point per NGDS party model.",
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "maxLength": 254,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Email"
+          },
+          "preferred_channel": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Channel"
+          },
+          "telephone": {
+            "anyOf": [
+              {
+                "pattern": "^\\+?[0-9]{10,15}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Telephone"
+          }
+        },
+        "title": "Contact",
+        "type": "object"
+      },
+      "AcordCoverage": {
+        "additionalProperties": false,
+        "description": "A single coverage/rider on a policy.",
+        "properties": {
+          "benefit_period_months": {
+            "anyOf": [
+              {
+                "maximum": 11,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Months"
+          },
+          "benefit_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Years"
+          },
+          "coverage_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Coverage Id",
+            "type": "string"
+          },
+          "coverage_type": {
+            "$ref": "#/$defs/CoverageType"
+          },
+          "face_amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Face Amount"
+          },
+          "is_guaranteed": {
+            "default": true,
+            "title": "Is Guaranteed",
+            "type": "boolean"
+          },
+          "is_rider": {
+            "default": false,
+            "title": "Is Rider",
+            "type": "boolean"
+          },
+          "premium_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium Period Years"
+          },
+          "premium_to_age": {
+            "anyOf": [
+              {
+                "maximum": 120,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium To Age"
+          },
+          "rate_class": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rate Class"
+          },
+          "waiting_period_months": {
+            "anyOf": [
+              {
+                "maximum": 60,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Waiting Period Months"
+          }
+        },
+        "required": [
+          "coverage_id",
+          "coverage_type"
+        ],
+        "title": "Coverage",
+        "type": "object"
+      },
+      "AcordLifeEvent": {
+        "additionalProperties": false,
+        "description": "A policy or coverage level event (issue, change, lapse, surrender...).",
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Amount"
+          },
+          "effective_date": {
+            "format": "date",
+            "title": "Effective Date",
+            "type": "string"
+          },
+          "event_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Event Type",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          },
+          "source_system": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source System"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "active"
+          }
+        },
+        "required": [
+          "event_id",
+          "event_type",
+          "effective_date"
+        ],
+        "title": "LifeEvent",
+        "type": "object"
+      },
+      "AcordPerson": {
+        "additionalProperties": false,
+        "description": "An individual party. ``ssn_last4`` only - full SSNs never transit this suite.",
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Address"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "contact": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Contact"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "date_of_birth": {
+            "format": "date",
+            "title": "Date Of Birth",
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "First Name",
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/$defs/Gender",
+            "default": "U"
+          },
+          "last_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Last Name",
+            "type": "string"
+          },
+          "middle_name": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Middle Name"
+          },
+          "party_id": {
+            "description": "Carrier-assigned party identifier.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "preferred_language": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Language"
+          },
+          "ssn_last4": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ssn Last4"
+          },
+          "suffix": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Suffix"
+          },
+          "tobacco_use": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required for mortality-rated life products.",
+            "title": "Tobacco Use"
+          }
+        },
+        "required": [
+          "party_id",
+          "first_name",
+          "last_name",
+          "date_of_birth"
+        ],
+        "title": "Person",
+        "type": "object"
+      },
+      "AcordPolicy": {
+        "additionalProperties": false,
+        "description": "The canonical life/annuity contract record.",
+        "properties": {
+          "annualised_premium": {
+            "default": 0.0,
+            "minimum": 0,
+            "title": "Annualised Premium",
+            "type": "number"
+          },
+          "coverages": {
+            "items": {
+              "$ref": "#/$defs/Coverage"
+            },
+            "title": "Coverages",
+            "type": "array"
+          },
+          "currency": {
+            "default": "USD",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/$defs/LifeEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "expiration_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expiration Date"
+          },
+          "face_amount": {
+            "description": "Sum assured / accumulation value base.",
+            "minimum": 0,
+            "title": "Face Amount",
+            "type": "number"
+          },
+          "issue_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Issue Date"
+          },
+          "lob": {
+            "default": "Life",
+            "description": "Line of business label.",
+            "maxLength": 40,
+            "title": "Lob",
+            "type": "string"
+          },
+          "master_group": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Master Group"
+          },
+          "parties": {
+            "items": {
+              "$ref": "#/$defs/RoleAssignment"
+            },
+            "title": "Parties",
+            "type": "array"
+          },
+          "payment_mode": {
+            "$ref": "#/$defs/PaymentMode",
+            "default": "monthly"
+          },
+          "policy_id": {
+            "description": "Carrier policy number.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "product_code": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Product Code",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "state_of_issue": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "State Of Issue",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "quoted"
+          },
+          "total_face_amount": {
+            "default": 0.0,
+            "description": "Aggregate face amount.",
+            "minimum": 0,
+            "title": "Total Face Amount",
+            "type": "number"
+          },
+          "valuation_method": {
+            "$ref": "#/$defs/ValuationMethod",
+            "default": "modifiedActuarial"
+          }
+        },
+        "required": [
+          "policy_id",
+          "product_id",
+          "product_code",
+          "face_amount",
+          "state_of_issue"
+        ],
+        "title": "Policy",
+        "type": "object"
+      },
+      "AcordRoleAssignment": {
+        "additionalProperties": false,
+        "description": "Binds a party to a contract in a specific role.",
+        "properties": {
+          "benefit_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Percent"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "#/$defs/Relationship"
+          },
+          "share_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Share Percent"
+          },
+          "term_years": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Term Years"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship"
+        ],
+        "title": "RoleAssignment",
+        "type": "object"
+      },
+      "AcordTransactionEnvelope": {
+        "additionalProperties": true,
+        "description": "The NGDS ``ACORD`` request/response envelope.\n\nLayout follows the standard's ``requestMessage`` / ``responseMessage``\nstructure: a header, an optional status block and one or more content\nobjects, plus vendor extensions carried under ``Extension``.",
+        "properties": {
+          "ACORDVersion": {
+            "default": "NGDS-LA-6.0",
+            "title": "Acordversion",
+            "type": "string"
+          },
+          "BusinessAreaCode": {
+            "default": "01",
+            "title": "Businessareacode",
+            "type": "string"
+          },
+          "Content": {
+            "additionalProperties": true,
+            "title": "Content",
+            "type": "object"
+          },
+          "Extension": {
+            "additionalProperties": true,
+            "title": "Extension",
+            "type": "object"
+          },
+          "MessageDateTime": {
+            "description": "ISO-8601 timestamp. NGDS uses UTC with an explicit offset.",
+            "title": "Messagedatetime",
+            "type": "string"
+          },
+          "MessageID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Messageid",
+            "type": "string"
+          },
+          "ReceiverID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Receiverid",
+            "type": "string"
+          },
+          "SecurityLevel": {
+            "default": 1,
+            "maximum": 9,
+            "minimum": 0,
+            "title": "Securitylevel",
+            "type": "integer"
+          },
+          "SenderID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Senderid",
+            "type": "string"
+          },
+          "StandardVersion": {
+            "default": "6.0.0",
+            "title": "Standardversion",
+            "type": "string"
+          },
+          "Status": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Status"
+          },
+          "TestMode": {
+            "default": false,
+            "title": "Testmode",
+            "type": "boolean"
+          },
+          "TransactionSet": {
+            "default": "TX",
+            "title": "Transactionset",
+            "type": "string"
+          },
+          "TransactionTypeCode": {
+            "maxLength": 8,
+            "minLength": 5,
+            "title": "Transactiontypecode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "SenderID",
+          "ReceiverID",
+          "MessageID",
+          "TransactionTypeCode",
+          "MessageDateTime"
+        ],
+        "title": "TransactionEnvelope",
+        "type": "object"
+      },
+      "ErrorCatalogEntry": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "type": "integer"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "httpStatus",
+          "title",
+          "description",
+          "retryable"
+        ],
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Problem": {
+        "description": "RFC 9457 problem details with the PAS error catalogue.",
+        "properties": {
+          "catalog_description": {
+            "type": "string"
+          },
+          "code": {
+            "examples": [
+              "PAS-400-VALIDATION"
+            ],
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "errors": {
+            "additionalProperties": true,
+            "description": "Field-level validation detail, when applicable.",
+            "type": "object"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "status": {
+            "maximum": 599,
+            "minimum": 100,
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "code"
+        ],
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "description": "Development and service API key. Not for production traffic.",
+        "in": "header",
+        "name": "X-API-Key",
+        "type": "apiKey"
+      },
+      "oauth2_authorization_code_pkce": {
+        "description": "Interactive user login with PKCE.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://id.pas.example/authorize",
+            "refreshUrl": "https://id.pas.example/token",
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "oauth2_client_credentials": {
+        "description": "Machine-to-machine access for service accounts.",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "tenantHeader": {
+        "description": "Tenant identifier header. The resolved tenant is compared against the token's tenant claim; a mismatch is rejected before routing.",
+        "in": "header",
+        "name": "PAS_TENANT_HEADER",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "**Unified Data Foundation / AI-Ready Data Mesh.**\n\nBuilds the layer *between* a carrier's Policy Administration System, claims, billing and CRM - it replaces none of them - and serves one reconciled, quality-scored, lineage-tracked view of customer, policy, claims and premium data over REST and the Model Context Protocol.\n\n**What it guarantees.**\n- *Per-carrier isolation*: every source, record, feature and cache key is tenant-scoped.\n- *Purpose limitation*: every read must state why; a read with no purpose is refused, not served.\n- *PII masking by classification*: sensitive fields are masked unless the caller holds the unmasking scope, and the response says which fields were masked.\n- *Bronze / silver / gold*: only deduplicated, survivorship-resolved golden records are queryable, so an agent cannot present two conflicting versions of the same person as fact.\n\nMCP server: `pas-unified-data` over streamable HTTP at `/mcp`.",
+    "title": "plugin6 - PAS Plugins",
+    "version": "1.0.0",
+    "x-acord-ngds": {
+      "sourceRef": "https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards",
+      "standardVersion": "6.0.0",
+      "transactionCodes": 40
+    },
+    "x-mcp": {
+      "path": "/mcp",
+      "server": "pas-unified-data",
+      "toolCount": 11,
+      "transport": "streamable-http"
+    },
+    "x-pas-plugin": "plugin6",
+    "x-pas-plugin-version": "1.0.0",
+    "x-pas-suite-version": "1.0.0",
+    "x-security-schemes": [
+      "oauth2_authorization_code_pkce",
+      "oauth2_client_credentials",
+      "apiKey"
+    ]
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/acord/ngds": {
+      "get": {
+        "description": "ACORD NGDS transaction code registry for Life and Annuity business.",
+        "operationId": "platform.acordRegistry",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordregistry",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS reference",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/acord/schemas": {
+      "get": {
+        "description": "Draft 2020-12 JSON Schemas for every canonical NGDS entity.",
+        "operationId": "platform.acordSchemas",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordschemas",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS JSON Schemas",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/data/catalog": {
+      "get": {
+        "description": "Entities, sources, features, quality, lineage and the PII policy.",
+        "operationId": "data.catalog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Catalog",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Unified data catalogue",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/changes": {
+      "post": {
+        "description": "Apply one CDC or webhook change to the unified layer.\n\nIdempotent on ``id``: re-delivering the same change does not duplicate the\nrecord, which is what makes at-least-once delivery safe.",
+        "operationId": "data.applyChange",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Applychange",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Apply a change-data-capture event",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/customers/{customer_id}/360": {
+      "get": {
+        "description": "The customer, their policies, their claims and their premium history - one call.\n\nThis is the endpoint the specification describes and the reason an AI agent\ncan be useful to a service agent.",
+        "operationId": "data.customer360",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "customer_id",
+            "required": true,
+            "schema": {
+              "title": "Customer Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "purpose",
+            "required": true,
+            "schema": {
+              "title": "Purpose",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "unmask",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Unmask",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Customer360",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Customer 360",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/entities/{surrogate_key}": {
+      "get": {
+        "description": "Read one record with its lineage and the list of fields that were masked.",
+        "operationId": "data.getEntity",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "surrogate_key",
+            "required": true,
+            "schema": {
+              "title": "Surrogate Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "purpose",
+            "required": true,
+            "schema": {
+              "title": "Purpose",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "unmask",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Unmask",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Getentity",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Read a golden record",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/features": {
+      "get": {
+        "description": "Every declared feature with owner, TTL, source and materialisation mode.",
+        "operationId": "data.listFeatures",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Listfeatures",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Feature definitions",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/features/drift": {
+      "post": {
+        "description": "Population Stability Index for a feature against its training baseline.",
+        "operationId": "data.featureDrift",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Featuredrift",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Measure feature drift",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/features/materialize": {
+      "post": {
+        "description": "Write feature values for an entity, recording version, source and expiry.",
+        "operationId": "data.materializeFeatures",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Materializefeatures",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Materialise feature values",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/features/retraining": {
+      "get": {
+        "description": "Which features have drifted enough to warrant retraining a model.",
+        "operationId": "data.retrainingTrigger",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Retrainingtrigger",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Retraining recommendation",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/features/vector": {
+      "get": {
+        "description": "Current feature values for online inference, with TTL enforcement.",
+        "operationId": "data.featureVector",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "entity_key",
+            "required": true,
+            "schema": {
+              "title": "Entity Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "entity_type",
+            "required": false,
+            "schema": {
+              "default": "submission",
+              "title": "Entity Type",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "features",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Features"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Featurevector",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fetch a feature vector",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/governance/metrics": {
+      "get": {
+        "description": "Operational metrics for the data mesh: records, quality and drift.",
+        "operationId": "data.metrics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Metrics",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Data mesh metrics",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/governance/pii": {
+      "get": {
+        "description": "Masking strategy per data class, allowed purposes and the unmasking scope.",
+        "operationId": "data.piiPolicy",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Piipolicy",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "PII policy",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/lineage": {
+      "get": {
+        "description": "Source-to-gold lineage as a node/edge graph for the management UI.",
+        "operationId": "data.lineage",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Lineage",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Lineage graph",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/lineage/events": {
+      "get": {
+        "description": "Raw OpenLineage-shaped run events, ready for an existing catalogue.",
+        "operationId": "data.lineageEvents",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Lineageevents",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "OpenLineage run events",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/lineage/impact": {
+      "get": {
+        "description": "Which downstream datasets are affected when this one is wrong.",
+        "operationId": "data.lineageImpact",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dataset",
+            "required": true,
+            "schema": {
+              "title": "Dataset",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Lineageimpact",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Downstream impact of a dataset",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/mdm/stats": {
+      "get": {
+        "description": "Golden record counts, survivorship ratio and the active policy.",
+        "operationId": "data.mdmStats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Mdmstats",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Master data statistics",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/mdm/survivorship": {
+      "get": {
+        "description": "Which fields disagreed across sources and which source won.",
+        "operationId": "data.survivorship",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Survivorship",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Survivorship decisions",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/quality": {
+      "get": {
+        "description": "Quality score, grade, per-dimension breakdown and failing rules.\n\nThis is the endpoint an AI agent should call before answering any\nquantitative question from the unified layer.",
+        "operationId": "data.qualityReport",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dataset",
+            "required": false,
+            "schema": {
+              "default": "unified-gold",
+              "title": "Dataset",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Qualityreport",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Data quality report",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/quality/rules": {
+      "get": {
+        "description": "Every registered quality rule, by entity type and dimension.",
+        "operationId": "data.qualityRules",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Qualityrules",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Quality rule catalogue",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/resolve": {
+      "post": {
+        "description": "Run entity resolution and survivorship, then score the result.",
+        "operationId": "data.resolve",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Resolve",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Resolve entities into golden records",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/sample-data": {
+      "post": {
+        "description": "Load reproducible sample data through every batch source (evaluation only).",
+        "operationId": "data.loadSample",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Loadsample",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Load deterministic sample data",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/search": {
+      "get": {
+        "description": "Search reconciled records. Returns summaries; sensitive values stay masked\nunless the caller holds the unmasking scope.",
+        "operationId": "data.search",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "purpose",
+            "required": true,
+            "schema": {
+              "title": "Purpose",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "entity_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entity Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Query"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "unmask",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Unmask",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Search",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Search golden records",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/sources": {
+      "get": {
+        "description": "What is ingested, from where, how often, and on which entity type.",
+        "operationId": "data.listSources",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Listsources",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List ingestion sources",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/data/sources/{source_id}/ingest": {
+      "post": {
+        "description": "Pull a batch source into the unified layer (bronze -> silver).",
+        "operationId": "data.ingest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "source_id",
+            "required": true,
+            "schema": {
+              "title": "Source Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Data.Ingest",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ingest a batch source",
+        "tags": [
+          "data-mesh"
+        ]
+      }
+    },
+    "/errors/catalog": {
+      "get": {
+        "description": "The full, stable error code catalogue so clients can branch on codes.",
+        "operationId": "platform.errorCatalog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Errorcatalog",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Published error catalogue",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Liveness probe. Never touches the database so it cannot produce a false negative.",
+        "operationId": "platform.health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Health",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe: checks that the tenant registry and MCP server are usable.",
+        "operationId": "platform.ready",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Ready",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/catalogue": {
+      "get": {
+        "description": "Tools, resources and prompts this plugin exposes over MCP.\n\nAn agent that cannot speak MCP can still read this document and call the\nequivalent REST endpoints.",
+        "operationId": "platform.mcpCatalogue",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpcatalogue",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP discovery document",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/stats": {
+      "get": {
+        "operationId": "platform.mcpStats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpstats",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP tool invocation statistics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics": {
+      "get": {
+        "description": "Prometheus text exposition format.",
+        "operationId": "platform.metrics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Prometheus metrics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics/snapshot": {
+      "get": {
+        "description": "Metric snapshot used by the Svelte management UI when Prometheus is not reachable.",
+        "operationId": "platform.metricsSnapshot",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Metricssnapshot",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "In-process metric snapshot",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/tenants": {
+      "get": {
+        "description": "Tenants visible to the caller. Cross-tenant reads are refused, not just hidden.",
+        "operationId": "platform.listTenants",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Listtenants",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tenant registry",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/version": {
+      "get": {
+        "description": "Version, enabled plugins and the connected PAS vendors.",
+        "operationId": "platform.version",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Version",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Build and capability information",
+        "tags": [
+          "platform"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_authorization_code_pkce": [],
+      "tenantHeader": []
+    },
+    {
+      "oauth2_client_credentials": [],
+      "tenantHeader": []
+    },
+    {
+      "apiKey": [],
+      "tenantHeader": []
+    }
+  ],
+  "tags": [
+    {
+      "description": "Ingestion, MDM, quality, lineage and features",
+      "name": "data-mesh"
+    },
+    {
+      "description": "Health, discovery and governance",
+      "name": "platform"
+    }
+  ]
+}

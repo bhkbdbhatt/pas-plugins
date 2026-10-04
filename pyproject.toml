@@ -1,0 +1,146 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pas-plugins"
+version = "1.0.0"
+description = "Suite of 7 sidecar plugins that make any Life & Annuity Policy Administration System AI-ready, IFRS 17 compliant and distribution-ready."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+authors = [{ name = "PAS Plugins Platform Team" }]
+
+dependencies = [
+  # --- web / API -----------------------------------------------------------
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "pydantic>=2.9",
+  "pydantic-settings>=2.6",
+  "starlette>=0.41",
+  "httpx>=0.27",
+  "python-multipart>=0.0.12",
+  "websockets>=13.1",
+  "sse-starlette>=2.1",
+  # --- OpenAPI / MCP -------------------------------------------------------
+  "mcp>=1.2",
+  "jsonschema>=4.23",
+  "openapi-spec-validator>=0.7",
+  # --- persistence ---------------------------------------------------------
+  "sqlalchemy[asyncio]>=2.0.36",
+  "asyncpg>=0.30",
+  "aiosqlite>=0.20",
+  "alembic>=1.14",
+  "redis>=5.2",
+  # --- numerics / ML -------------------------------------------------------
+  "numpy>=2.0",
+  "scipy>=1.14",
+  "pandas>=2.2",
+  "scikit-learn>=1.5",
+  "xgboost>=2.1",
+  "lightgbm>=4.5",
+  "shap>=0.46",
+  # --- integration ---------------------------------------------------------
+  "pyyaml>=6.0",
+  "jinja2>=3.1",
+  "tenacity>=9.0",
+  "orjson>=3.10",
+  # --- observability / security ------------------------------------------
+  "prometheus-client>=0.21",
+  "opentelemetry-api>=1.28",
+  "opentelemetry-sdk>=1.28",
+  "opentelemetry-instrumentation-fastapi>=0.49b0",
+  "python-jose[cryptography]>=3.3",
+  "cryptography>=43.0",
+  "python-multipart>=0.0.12",
+  # --- docs ----------------------------------------------------------------
+  "openpyxl>=3.1",
+  "reportlab>=4.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "pytest-cov>=6.0",
+  "schemathesis>=3.39",
+  "hypothesis>=6.112",
+  "ruff>=0.7",
+  "mypy>=1.13",
+  "types-pyyaml>=6.0",
+  "types-redis>=4.6",
+  "fakeredis>=2.26",
+]
+
+[project.scripts]
+pas-plugin1 = "pas_plugins.plugin1_gateway.main:run"
+pas-plugin2 = "pas_plugins.plugin2_ifrs17.main:run"
+pas-plugin3 = "pas_plugins.plugin3_auw.main:run"
+pas-plugin4 = "pas_plugins.plugin4_productconfig.main:run"
+pas-plugin5 = "pas_plugins.plugin5_embedded.main:run"
+pas-plugin6 = "pas_plugins.plugin6_datamesh.main:run"
+pas-plugin7 = "pas_plugins.plugin7_blockchain.main:run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pas_core", "src/pas_plugins"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests", "src"]
+pythonpath = ["src"]
+addopts = "-q --strict-markers --strict-config"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+  "contract: Schemathesis / OpenAPI contract tests",
+  "integration: multi-component integration tests",
+  "slow: long running tests",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+extend-exclude = [".venv", "node_modules", "deploy"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM", "RUF", "TID", "PTH", "ARG", "PL", "TRY", "S", "ANN"]
+ignore = [
+  "ANN401",  # allow Any in dynamic JSON/ACORD payloads
+  "PLR0913",  # service-layer constructors legitimately take many collaborators
+  "PLR2004",
+  "S101",     # asserts are used for internal invariants
+  "TRY003",
+  "EM101",
+  "EM102",
+  "COM812",
+  "ISC001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "ANN", "PLR2004", "ARG", "N802", "N803", "N806"]
+"src/pas_plugins/plugin3_auw/**" = ["N803", "N806", "A002", "A003"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pas_core", "pas_plugins"]
+
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+packages = ["pas_core"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+no_implicit_optional = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+warn_redundant_casts = true
+plugins = []
+exclude = ["^tests/", "^node_modules/"]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "raise NotImplementedError"]

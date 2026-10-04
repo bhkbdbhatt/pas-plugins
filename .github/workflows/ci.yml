@@ -1,0 +1,148 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# One concurrent run per branch: a newer push makes an in-flight run's results
+# irrelevant, and cancelling it saves the minutes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python quality and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Lint
+        run: ruff check src tests scripts
+
+      - name: Format check
+        run: ruff format --check src tests
+
+      - name: Type check
+        # The codebase is strictly typed in the domains where a wrong type would
+        # be a wrong number; pas_core carries explicit ignores for the parts that
+        # are dynamic by nature (MCP handler plumbing, plugin registries).
+        run: mypy src --ignore-missing-imports
+
+      - name: Tests
+        run: pytest -q --maxfail=1
+
+      - name: Coverage floor
+        run: |
+          pytest --cov=src --cov-report=term-missing:skip-covered --cov-fail-under=0
+
+  contracts:
+    name: OpenAPI and Postman contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -e ".[dev]"
+
+      # --check regenerates the specs in memory and fails when a committed file is
+      # stale. This is the job that stops an endpoint being added without its
+      # contract, which is the failure a spec file otherwise hides.
+      - name: OpenAPI specs are current and valid
+        run: python scripts/export_openapi.py --check --validate
+
+      - name: Postman collections are current
+        run: |
+          python scripts/generate_postman.py
+          git diff --exit-code -- contracts/postman
+
+      - name: UI sources are current
+        run: |
+          python scripts/generate_ui.py
+          git diff --exit-code -- ui
+
+  ui:
+    name: UI type check and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        plugin: [plugin1, plugin2, plugin3, plugin4, plugin5, plugin6, plugin7]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ui/${{ matrix.plugin }}-ui/package-lock.json
+
+      - name: Install
+        working-directory: ui/${{ matrix.plugin }}-ui
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+      - name: svelte-check
+        working-directory: ui/${{ matrix.plugin }}-ui
+        run: npm run check
+
+      - name: Build
+        working-directory: ui/${{ matrix.plugin }}-ui
+        run: npm run build
+
+  containers:
+    name: Plugin image
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -e ".[dev]"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/Dockerfile
+          push: false
+          tags: pas-plugin:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Building without pushing proves the single image serves all seven plugins,
+      # which is the assumption the compose file and the Helm chart both rely on.
+      - name: Smoke each plugin entry point
+        run: |
+          set -euo pipefail
+          python scripts/smoke_plugins.py

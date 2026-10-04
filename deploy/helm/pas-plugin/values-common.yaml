@@ -1,0 +1,36 @@
+# Values shared by every plugin release. Nothing plugin-specific lives here on
+# purpose: if a value cannot apply to all seven plugins, it belongs in the
+# per-release values file instead.
+#
+# Note this is a `-f` values file, not a template, so it must be plain YAML: a
+# Helm `{{/* */}}` comment here would be parsed literally and fail.
+global:
+  imageRegistry: ghcr.io
+  imagePullSecrets: []
+
+auth:
+  mode: oidc
+  issuer: https://id.pas.example
+  audience: pas-plugins
+  jwksUrl: https://id.pas.example/.well-known/jwks.json
+  required: true
+
+tenancy:
+  header: X-Tenant-Id
+
+observability:
+  logLevel: INFO
+  logFormat: json
+  metricsPath: /metrics
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+
+persistence:
+  enabled: false
+
+redis:
+  host: pas-redis
+  port: 6379
+  # Managed by the platform; a connection secret is created only when one is supplied.
+  existingSecret: ""

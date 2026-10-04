@@ -1,0 +1,942 @@
+{
+  "name": "3 - AUW Workbench",
+  "description": "Generated from plugin3 - PAS Plugins by scripts/generate_postman.py. Do not edit by hand; regenerate instead.\n\nDefault port: 8003. Set `baseUrl` to http://localhost:8003.",
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8003"
+    },
+    {
+      "key": "tenantId",
+      "value": "demo-carrier"
+    }
+  ],
+  "item": [
+    {
+      "name": "Read operations",
+      "item": [
+        {
+          "name": "ACORD NGDS reference",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/ngds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "ngds"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS reference"
+          },
+          "response": []
+        },
+        {
+          "name": "ACORD NGDS JSON Schemas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/schemas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "schemas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS JSON Schemas"
+          },
+          "response": []
+        },
+        {
+          "name": "Decisions recorded for a submission",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/decisions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "decisions"
+              ],
+              "query": [
+                {
+                  "key": "submissionId",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Decisions recorded for a submission"
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve a decision",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/decisions/:decision_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "decisions",
+                ":decision_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "decision_id",
+                  "value": "sample-decision_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Retrieve a decision"
+          },
+          "response": []
+        },
+        {
+          "name": "Human-readable decision explanation",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/decisions/:decision_id/explain",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "decisions",
+                ":decision_id",
+                "explain"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "decision_id",
+                  "value": "sample-decision_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Human-readable decision explanation"
+          },
+          "response": []
+        },
+        {
+          "name": "Model and rule inventory",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/health/detailed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "health",
+                "detailed"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Model and rule inventory"
+          },
+          "response": []
+        },
+        {
+          "name": "Model monitoring report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/monitoring/report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "monitoring",
+                "report"
+              ],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Model monitoring report"
+          },
+          "response": []
+        },
+        {
+          "name": "The active appetite ruleset",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/ruleset",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "ruleset"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "The active appetite ruleset"
+          },
+          "response": []
+        },
+        {
+          "name": "Cases awaiting human underwriter review",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/underwriting-queue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "underwriting-queue"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Cases awaiting human underwriter review"
+          },
+          "response": []
+        },
+        {
+          "name": "Published error catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/errors/catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "errors",
+                "catalog"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Published error catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Liveness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Liveness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Readiness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health",
+                "ready"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Readiness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP discovery document",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/catalogue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "catalogue"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP discovery document"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP tool invocation statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP tool invocation statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Prometheus metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Prometheus metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "In-process metric snapshot",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics/snapshot",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics",
+                "snapshot"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "In-process metric snapshot"
+          },
+          "response": []
+        },
+        {
+          "name": "Tenant registry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Tenant registry"
+          },
+          "response": []
+        },
+        {
+          "name": "Build and capability information",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "version"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Build and capability information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mutating operations",
+      "item": [
+        {
+          "name": "Record an underwriter override",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/decisions/:decision_id/override",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "decisions",
+                ":decision_id",
+                "override"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "decision_id",
+                  "value": "sample-decision_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assignedClass\": {},\n  \"decision\": {},\n  \"followUpAt\": {},\n  \"reason\": \"string(1000)\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nRecord an underwriter override"
+          },
+          "response": []
+        },
+        {
+          "name": "Submit an application for triage and decision",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/submissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "submissions"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nSubmit an application for triage and decision"
+          },
+          "response": []
+        },
+        {
+          "name": "Produce an explainable decision",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/submissions/:submission_id/decision",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "submissions",
+                ":submission_id",
+                "decision"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "submission_id",
+                  "value": "SUB0000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nProduce an explainable decision"
+          },
+          "response": []
+        },
+        {
+          "name": "Resolve consent-gated external signals",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/submissions/:submission_id/enrich",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "submissions",
+                ":submission_id",
+                "enrich"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "submission_id",
+                  "value": "SUB0000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nResolve consent-gated external signals"
+          },
+          "response": []
+        },
+        {
+          "name": "Extract fields from documents with provenance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/submissions/:submission_id/extract",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "submissions",
+                ":submission_id",
+                "extract"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "submission_id",
+                  "value": "SUB0000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nExtract fields from documents with provenance"
+          },
+          "response": []
+        },
+        {
+          "name": "Score risk with exact attributions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/submissions/:submission_id/score",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "submissions",
+                ":submission_id",
+                "score"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "submission_id",
+                  "value": "SUB0000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nScore risk with exact attributions"
+          },
+          "response": []
+        },
+        {
+          "name": "Score complexity without deciding",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auw/submissions/:submission_id/triage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auw",
+                "submissions",
+                ":submission_id",
+                "triage"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "submission_id",
+                  "value": "SUB0000",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nScore complexity without deciding"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

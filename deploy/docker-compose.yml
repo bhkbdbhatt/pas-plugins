@@ -1,0 +1,134 @@
+# Local development stack: all seven plugins, Redis and Postgres.
+#
+# Each plugin is the same image with a different module and port, which is the
+# point of the single Dockerfile. Tenant isolation is not simulated here: every
+# service reads PAS_TENANT_HEADER so a header swap still fails in development the
+# way it fails in production.
+
+name: pas-plugins
+
+x-plugin: &plugin
+  build:
+    context: ..
+    dockerfile: deploy/Dockerfile
+  restart: unless-stopped
+  environment: &plugin-env
+    PAS_ENV: development
+    PAS_LOG_FORMAT: json
+    PAS_LOG_LEVEL: INFO
+    PAS_TENANT_HEADER: X-Tenant-Id
+    PAS_REDIS_URL: redis://redis:6379/0
+    PAS_FACTORY_BACKEND: memory
+  networks: [pas]
+  healthcheck:
+    test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health"]
+    interval: 30s
+    timeout: 3s
+    retries: 3
+    start_period: 10s
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes: [redis-data:/data]
+    networks: [pas]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pas
+      POSTGRES_PASSWORD: pas
+      POSTGRES_DB: pas
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    networks: [pas]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pas -d pas"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  plugin1:
+    <<: *plugin
+    container_name: pas-plugin1
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin1_gateway.main
+      PLUGIN_PORT: "8001"
+    ports: ["8001:8000"]
+    command: ["uvicorn", "pas_plugins.plugin1_gateway.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  plugin2:
+    <<: *plugin
+    container_name: pas-plugin2
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin2_ifrs17.main
+      PLUGIN_PORT: "8002"
+    ports: ["8002:8000"]
+    command: ["uvicorn", "pas_plugins.plugin2_ifrs17.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  plugin3:
+    <<: *plugin
+    container_name: pas-plugin3
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin3_auw.main
+      PLUGIN_PORT: "8003"
+    ports: ["8003:8000"]
+    command: ["uvicorn", "pas_plugins.plugin3_auw.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  plugin4:
+    <<: *plugin
+    container_name: pas-plugin4
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin4_productconfig.main
+      PLUGIN_PORT: "8004"
+    ports: ["8004:8000"]
+    command: ["uvicorn", "pas_plugins.plugin4_productconfig.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  plugin5:
+    <<: *plugin
+    container_name: pas-plugin5
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin5_embedded.main
+      PLUGIN_PORT: "8005"
+    ports: ["8005:8000"]
+    command: ["uvicorn", "pas_plugins.plugin5_embedded.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  plugin6:
+    <<: *plugin
+    container_name: pas-plugin6
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin6_datamesh.main
+      PLUGIN_PORT: "8006"
+    ports: ["8006:8000"]
+    command: ["uvicorn", "pas_plugins.plugin6_datamesh.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  plugin7:
+    <<: *plugin
+    container_name: pas-plugin7
+    environment:
+      <<: *plugin-env
+      PLUGIN_MODULE: pas_plugins.plugin7_blockchain.main
+      PLUGIN_PORT: "8007"
+    ports: ["8007:8000"]
+    command: ["uvicorn", "pas_plugins.plugin7_blockchain.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+volumes:
+  redis-data:
+  postgres-data:
+
+networks:
+  pas:
+    driver: bridge

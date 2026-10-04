@@ -1,0 +1,1909 @@
+{
+  "components": {
+    "schemas": {
+      "AcordAddress": {
+        "additionalProperties": false,
+        "description": "NGDS address block. ISO 3166-2 subdivision codes are required for US.",
+        "properties": {
+          "city": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "default": "US",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Country",
+            "type": "string"
+          },
+          "line1": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Line1",
+            "type": "string"
+          },
+          "line2": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line2"
+          },
+          "postal_code": {
+            "description": "US ZIP / ZIP+4",
+            "pattern": "^\\d{5}(-\\d{4})?$",
+            "title": "Postal Code",
+            "type": "string"
+          },
+          "state": {
+            "description": "US state or territory code, e.g. 'NY'.",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "postal_code"
+        ],
+        "title": "Address",
+        "type": "object"
+      },
+      "AcordBeneficiaryAllocation": {
+        "additionalProperties": false,
+        "description": "Beneficiary share with the multi-signature approval state.",
+        "properties": {
+          "approval_did": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "W3C DID of the approving credential holder.",
+            "title": "Approval Did"
+          },
+          "approved": {
+            "default": false,
+            "title": "Approved",
+            "type": "boolean"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Approved At"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "Relationship",
+            "type": "string"
+          },
+          "share_percent": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Share Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship",
+          "share_percent"
+        ],
+        "title": "BeneficiaryAllocation",
+        "type": "object"
+      },
+      "AcordContact": {
+        "additionalProperties": false,
+        "description": "Contact point per NGDS party model.",
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "maxLength": 254,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Email"
+          },
+          "preferred_channel": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Channel"
+          },
+          "telephone": {
+            "anyOf": [
+              {
+                "pattern": "^\\+?[0-9]{10,15}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Telephone"
+          }
+        },
+        "title": "Contact",
+        "type": "object"
+      },
+      "AcordCoverage": {
+        "additionalProperties": false,
+        "description": "A single coverage/rider on a policy.",
+        "properties": {
+          "benefit_period_months": {
+            "anyOf": [
+              {
+                "maximum": 11,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Months"
+          },
+          "benefit_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Years"
+          },
+          "coverage_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Coverage Id",
+            "type": "string"
+          },
+          "coverage_type": {
+            "$ref": "#/$defs/CoverageType"
+          },
+          "face_amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Face Amount"
+          },
+          "is_guaranteed": {
+            "default": true,
+            "title": "Is Guaranteed",
+            "type": "boolean"
+          },
+          "is_rider": {
+            "default": false,
+            "title": "Is Rider",
+            "type": "boolean"
+          },
+          "premium_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium Period Years"
+          },
+          "premium_to_age": {
+            "anyOf": [
+              {
+                "maximum": 120,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium To Age"
+          },
+          "rate_class": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rate Class"
+          },
+          "waiting_period_months": {
+            "anyOf": [
+              {
+                "maximum": 60,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Waiting Period Months"
+          }
+        },
+        "required": [
+          "coverage_id",
+          "coverage_type"
+        ],
+        "title": "Coverage",
+        "type": "object"
+      },
+      "AcordLifeEvent": {
+        "additionalProperties": false,
+        "description": "A policy or coverage level event (issue, change, lapse, surrender...).",
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Amount"
+          },
+          "effective_date": {
+            "format": "date",
+            "title": "Effective Date",
+            "type": "string"
+          },
+          "event_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Event Type",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          },
+          "source_system": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source System"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "active"
+          }
+        },
+        "required": [
+          "event_id",
+          "event_type",
+          "effective_date"
+        ],
+        "title": "LifeEvent",
+        "type": "object"
+      },
+      "AcordPerson": {
+        "additionalProperties": false,
+        "description": "An individual party. ``ssn_last4`` only - full SSNs never transit this suite.",
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Address"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "contact": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Contact"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "date_of_birth": {
+            "format": "date",
+            "title": "Date Of Birth",
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "First Name",
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/$defs/Gender",
+            "default": "U"
+          },
+          "last_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Last Name",
+            "type": "string"
+          },
+          "middle_name": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Middle Name"
+          },
+          "party_id": {
+            "description": "Carrier-assigned party identifier.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "preferred_language": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Language"
+          },
+          "ssn_last4": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ssn Last4"
+          },
+          "suffix": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Suffix"
+          },
+          "tobacco_use": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required for mortality-rated life products.",
+            "title": "Tobacco Use"
+          }
+        },
+        "required": [
+          "party_id",
+          "first_name",
+          "last_name",
+          "date_of_birth"
+        ],
+        "title": "Person",
+        "type": "object"
+      },
+      "AcordPolicy": {
+        "additionalProperties": false,
+        "description": "The canonical life/annuity contract record.",
+        "properties": {
+          "annualised_premium": {
+            "default": 0.0,
+            "minimum": 0,
+            "title": "Annualised Premium",
+            "type": "number"
+          },
+          "coverages": {
+            "items": {
+              "$ref": "#/$defs/Coverage"
+            },
+            "title": "Coverages",
+            "type": "array"
+          },
+          "currency": {
+            "default": "USD",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/$defs/LifeEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "expiration_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expiration Date"
+          },
+          "face_amount": {
+            "description": "Sum assured / accumulation value base.",
+            "minimum": 0,
+            "title": "Face Amount",
+            "type": "number"
+          },
+          "issue_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Issue Date"
+          },
+          "lob": {
+            "default": "Life",
+            "description": "Line of business label.",
+            "maxLength": 40,
+            "title": "Lob",
+            "type": "string"
+          },
+          "master_group": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Master Group"
+          },
+          "parties": {
+            "items": {
+              "$ref": "#/$defs/RoleAssignment"
+            },
+            "title": "Parties",
+            "type": "array"
+          },
+          "payment_mode": {
+            "$ref": "#/$defs/PaymentMode",
+            "default": "monthly"
+          },
+          "policy_id": {
+            "description": "Carrier policy number.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "product_code": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Product Code",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "state_of_issue": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "State Of Issue",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "quoted"
+          },
+          "total_face_amount": {
+            "default": 0.0,
+            "description": "Aggregate face amount.",
+            "minimum": 0,
+            "title": "Total Face Amount",
+            "type": "number"
+          },
+          "valuation_method": {
+            "$ref": "#/$defs/ValuationMethod",
+            "default": "modifiedActuarial"
+          }
+        },
+        "required": [
+          "policy_id",
+          "product_id",
+          "product_code",
+          "face_amount",
+          "state_of_issue"
+        ],
+        "title": "Policy",
+        "type": "object"
+      },
+      "AcordRoleAssignment": {
+        "additionalProperties": false,
+        "description": "Binds a party to a contract in a specific role.",
+        "properties": {
+          "benefit_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Percent"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "#/$defs/Relationship"
+          },
+          "share_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Share Percent"
+          },
+          "term_years": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Term Years"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship"
+        ],
+        "title": "RoleAssignment",
+        "type": "object"
+      },
+      "AcordTransactionEnvelope": {
+        "additionalProperties": true,
+        "description": "The NGDS ``ACORD`` request/response envelope.\n\nLayout follows the standard's ``requestMessage`` / ``responseMessage``\nstructure: a header, an optional status block and one or more content\nobjects, plus vendor extensions carried under ``Extension``.",
+        "properties": {
+          "ACORDVersion": {
+            "default": "NGDS-LA-6.0",
+            "title": "Acordversion",
+            "type": "string"
+          },
+          "BusinessAreaCode": {
+            "default": "01",
+            "title": "Businessareacode",
+            "type": "string"
+          },
+          "Content": {
+            "additionalProperties": true,
+            "title": "Content",
+            "type": "object"
+          },
+          "Extension": {
+            "additionalProperties": true,
+            "title": "Extension",
+            "type": "object"
+          },
+          "MessageDateTime": {
+            "description": "ISO-8601 timestamp. NGDS uses UTC with an explicit offset.",
+            "title": "Messagedatetime",
+            "type": "string"
+          },
+          "MessageID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Messageid",
+            "type": "string"
+          },
+          "ReceiverID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Receiverid",
+            "type": "string"
+          },
+          "SecurityLevel": {
+            "default": 1,
+            "maximum": 9,
+            "minimum": 0,
+            "title": "Securitylevel",
+            "type": "integer"
+          },
+          "SenderID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Senderid",
+            "type": "string"
+          },
+          "StandardVersion": {
+            "default": "6.0.0",
+            "title": "Standardversion",
+            "type": "string"
+          },
+          "Status": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Status"
+          },
+          "TestMode": {
+            "default": false,
+            "title": "Testmode",
+            "type": "boolean"
+          },
+          "TransactionSet": {
+            "default": "TX",
+            "title": "Transactionset",
+            "type": "string"
+          },
+          "TransactionTypeCode": {
+            "maxLength": 8,
+            "minLength": 5,
+            "title": "Transactiontypecode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "SenderID",
+          "ReceiverID",
+          "MessageID",
+          "TransactionTypeCode",
+          "MessageDateTime"
+        ],
+        "title": "TransactionEnvelope",
+        "type": "object"
+      },
+      "ErrorCatalogEntry": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "type": "integer"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "httpStatus",
+          "title",
+          "description",
+          "retryable"
+        ],
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Problem": {
+        "description": "RFC 9457 problem details with the PAS error catalogue.",
+        "properties": {
+          "catalog_description": {
+            "type": "string"
+          },
+          "code": {
+            "examples": [
+              "PAS-400-VALIDATION"
+            ],
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "errors": {
+            "additionalProperties": true,
+            "description": "Field-level validation detail, when applicable.",
+            "type": "object"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "status": {
+            "maximum": 599,
+            "minimum": 100,
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "code"
+        ],
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "description": "Development and service API key. Not for production traffic.",
+        "in": "header",
+        "name": "X-API-Key",
+        "type": "apiKey"
+      },
+      "oauth2_authorization_code_pkce": {
+        "description": "Interactive user login with PKCE.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://id.pas.example/authorize",
+            "refreshUrl": "https://id.pas.example/token",
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "oauth2_client_credentials": {
+        "description": "Machine-to-machine access for service accounts.",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "tenantHeader": {
+        "description": "Tenant identifier header. The resolved tenant is compared against the token's tenant claim; a mismatch is rejected before routing.",
+        "in": "header",
+        "name": "PAS_TENANT_HEADER",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Low-Code Product Configuration.\n\n**Problem.** 58% of carriers report that product configuration is a bottleneck for launching new products, and 67% say it holds back innovation. The cause is rarely appetite - it is that a new product means code, and code means a release cycle measured in months.\n\n**Approach.** A product becomes a document. Covers, benefits, charges, rating tables, eligibility rules and compliance constraints are all data, validated structurally on every save; a single fixed engine interprets them. The author cannot inject arbitrary logic, only the constructs the engine understands - and that engine is tested and certified once rather than per product.\n\nBefore anything is published, the definition passes guardrails that check band partitioning, referential integrity, margin and the regulatory constraints a filing reviewer would check. Publication produces an immutable content-hashed version; drafts stay mutable, published versions never do. A blocker stops publication, a warning does not, and whoever accepted a warning is recorded on the version.\n\nREST endpoints live under `/products`. The same twelve capabilities are exposed as MCP tools over streamable HTTP at `/mcp`.",
+    "title": "plugin4 - PAS Plugins",
+    "version": "1.0.0",
+    "x-acord-ngds": {
+      "sourceRef": "https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards",
+      "standardVersion": "6.0.0",
+      "transactionCodes": 40
+    },
+    "x-mcp": {
+      "path": "/mcp",
+      "server": "pas-product-config",
+      "toolCount": 12,
+      "transport": "streamable-http"
+    },
+    "x-pas-plugin": "plugin4",
+    "x-pas-plugin-version": "1.0.0",
+    "x-pas-suite-version": "1.0.0",
+    "x-security-schemes": [
+      "oauth2_authorization_code_pkce",
+      "oauth2_client_credentials",
+      "apiKey"
+    ]
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/acord/ngds": {
+      "get": {
+        "description": "ACORD NGDS transaction code registry for Life and Annuity business.",
+        "operationId": "platform.acordRegistry",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordregistry",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS reference",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/acord/schemas": {
+      "get": {
+        "description": "Draft 2020-12 JSON Schemas for every canonical NGDS entity.",
+        "operationId": "platform.acordSchemas",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordschemas",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS JSON Schemas",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/errors/catalog": {
+      "get": {
+        "description": "The full, stable error code catalogue so clients can branch on codes.",
+        "operationId": "platform.errorCatalog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Errorcatalog",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Published error catalogue",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Liveness probe. Never touches the database so it cannot produce a false negative.",
+        "operationId": "platform.health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Health",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe: checks that the tenant registry and MCP server are usable.",
+        "operationId": "platform.ready",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Ready",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/catalogue": {
+      "get": {
+        "description": "Tools, resources and prompts this plugin exposes over MCP.\n\nAn agent that cannot speak MCP can still read this document and call the\nequivalent REST endpoints.",
+        "operationId": "platform.mcpCatalogue",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpcatalogue",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP discovery document",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/stats": {
+      "get": {
+        "operationId": "platform.mcpStats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpstats",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP tool invocation statistics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics": {
+      "get": {
+        "description": "Prometheus text exposition format.",
+        "operationId": "platform.metrics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Prometheus metrics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics/snapshot": {
+      "get": {
+        "description": "Metric snapshot used by the Svelte management UI when Prometheus is not reachable.",
+        "operationId": "platform.metricsSnapshot",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Metricssnapshot",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "In-process metric snapshot",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/products/drafts": {
+      "post": {
+        "description": "Save a draft definition. Published versions are never modified.",
+        "operationId": "products.saveDraft",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Savedraft",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Create or update a product draft",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/drafts/{product_id}": {
+      "get": {
+        "description": "The current mutable definition of a product.",
+        "operationId": "products.getDraft",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Getdraft",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fetch a draft",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/drafts/{product_id}/simulate": {
+      "post": {
+        "description": "Price a synthetic book of business against a definition.\n\nReports premium, margin, loss ratio and how many applicants could not be\npriced at all. The benefit-cost assumption is stated in the notes; replace\nit with a real mortality basis for an actuarial estimate.",
+        "operationId": "products.simulate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Simulate",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Simulate economics against a book of business",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/drafts/{product_id}/validate": {
+      "post": {
+        "description": "Structural, rating, compliance and economics findings, with remediation.",
+        "operationId": "products.validate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Validate",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run guardrails against a draft",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/meta": {
+      "get": {
+        "description": "What a product author can configure, and the operators rules may use.",
+        "operationId": "products.meta",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Meta",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Supported constructs",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/quote": {
+      "post": {
+        "description": "Price against the latest published version, itemised and reproducible.\n\nThe tenant is taken from the authenticated context, never from the body.\nAccepting a caller-supplied `tenantId` would let a caller quote against\nanother carrier's product by putting their id in the request.",
+        "operationId": "products.quote",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Quote",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Price a quote",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/{product_id}/covers/{cover_id}/price": {
+      "get": {
+        "description": "A grid of quotes across age and face amount.\n\nThis is the view a product manager checks before filing rates, so it\nreports the unpriceable cells explicitly instead of omitting them.",
+        "operationId": "products.priceMatrix",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "cover_id",
+            "required": true,
+            "schema": {
+              "title": "Cover Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "ages",
+            "required": false,
+            "schema": {
+              "default": 7,
+              "maximum": 40,
+              "minimum": 1,
+              "title": "Ages",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "minFace",
+            "required": false,
+            "schema": {
+              "default": 100000.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Minface",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "maxFace",
+            "required": false,
+            "schema": {
+              "default": 2000000.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Maxface",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Pricematrix",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Age/face price matrix for a cover",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/{product_id}/publish": {
+      "post": {
+        "description": "Publish the draft. Refused while any guardrail blocker stands.",
+        "operationId": "products.publish",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Publish",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Publish a draft as an immutable version",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/{product_id}/versions": {
+      "get": {
+        "description": "Every published version, oldest first, with content hashes.",
+        "operationId": "products.listVersions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Listversions",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Published versions of a product",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/{product_id}/versions/{from_version}/diff/{to_version}": {
+      "get": {
+        "description": "Structural difference between two versions, flagged for materiality.",
+        "operationId": "products.diffVersions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "from_version",
+            "required": true,
+            "schema": {
+              "title": "From Version",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "to_version",
+            "required": true,
+            "schema": {
+              "title": "To Version",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Diffversions",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Diff two published versions",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/{product_id}/versions/{version}": {
+      "get": {
+        "description": "A published version, including the guardrail state at publication.",
+        "operationId": "products.getVersion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "title": "Version",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Getversion",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fetch one published version",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/products/{product_id}/versions/{version}/retire": {
+      "post": {
+        "description": "Mark a version retired. Its content and hash are left intact.",
+        "operationId": "products.retire",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "title": "Product Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "title": "Version",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Products.Retire",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Withdraw a published version",
+        "tags": [
+          "product-config"
+        ]
+      }
+    },
+    "/tenants": {
+      "get": {
+        "description": "Tenants visible to the caller. Cross-tenant reads are refused, not just hidden.",
+        "operationId": "platform.listTenants",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Listtenants",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tenant registry",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/version": {
+      "get": {
+        "description": "Version, enabled plugins and the connected PAS vendors.",
+        "operationId": "platform.version",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Version",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Build and capability information",
+        "tags": [
+          "platform"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_authorization_code_pkce": [],
+      "tenantHeader": []
+    },
+    {
+      "oauth2_client_credentials": [],
+      "tenantHeader": []
+    },
+    {
+      "apiKey": [],
+      "tenantHeader": []
+    }
+  ],
+  "tags": [
+    {
+      "description": "Authoring, validation, simulation and publication",
+      "name": "product-config"
+    },
+    {
+      "description": "Health, discovery and governance",
+      "name": "platform"
+    }
+  ]
+}

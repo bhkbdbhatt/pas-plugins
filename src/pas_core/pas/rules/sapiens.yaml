@@ -1,0 +1,158 @@
+# =============================================================================
+#  Sapiens Life & Annuity translation profile
+# -----------------------------------------------------------------------------
+#  Sapiens uses an optimistic-concurrency model: writes must carry the current
+#  policy version, and monetary values are decimal strings alongside an explicit
+#  currency field. Life and annuity share one aggregate, split by lineOfBusiness.
+# =============================================================================
+vendor: sapiens
+display_name: Sapiens Life & Annuity
+version: "1.1.0"
+description: >-
+  Sapiens translation profile for version-checked writes and decimal-string amounts.
+source_ref: https://sapiens.com/
+
+operations:
+  - operation_id: policy.get
+    description: Retrieve a Sapiens contract aggregate.
+    to_vendor:
+      - kind: field
+        source: policyId
+        target: policyNumber
+        cast: str
+      - kind: field
+        source: includeHistory
+        target: includeHistory
+        cast: bool
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: attributes
+      - kind: field
+        source: policyNumber
+        target: policyId
+        cast: str
+      - kind: enum
+        source: policyStatus
+        target: status
+        mapping:
+          inforce: active
+          issued: issued
+          free_look: issued
+          lapse: lapsed
+          lapsed: lapsed
+          terminated: terminated
+          expired: expired
+          paidup: paid_up
+          surrender: surrendered
+          withdrawn: surrendered
+        when_missing: error
+      - kind: field
+        source: policyVersion
+        target: policyVersion
+        cast: int
+        when_missing: skip
+      - kind: field
+        source: lineOfBusiness
+        target: lob
+        cast: str
+        when_missing: skip
+
+  - operation_id: policy.lapse
+    description: Lapse a Sapiens contract (version checked).
+    to_vendor:
+      - kind: require
+        source: policyVersion
+        description: Sapiens returns 409 without the current policy version.
+        when_missing: error
+      - kind: field
+        source: policyVersion
+        target: policyVersion
+        cast: int
+      - kind: field
+        source: effectiveDate
+        target: effectiveDate
+        cast: date
+      - kind: enum
+        source: reason
+        target: lapseReason
+        mapping:
+          nonPayment: NON_PAYMENT
+          customerRequest: CUSTOMER_REQUEST
+          underwriting: UNDERWRITING
+          other: OTHER
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: attributes
+      - kind: field
+        source: newPolicyVersion
+        target: policyVersion
+        cast: int
+        when_missing: skip
+      - kind: constant
+        target: status
+        value: lapsed
+
+  - operation_id: policy.surrender
+    description: Surrender a Sapiens contract and pay the surrender value.
+    to_vendor:
+      - kind: require
+        source: policyVersion
+        description: Sapiens returns 409 without the current policy version.
+        when_missing: error
+      - kind: field
+        source: policyVersion
+        target: policyVersion
+        cast: int
+      - kind: enum
+        source: reason
+        target: surrenderReason
+        mapping:
+          customerRequest: VOLUNTARY
+          death: DEATH
+          other: OTHER
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: attributes
+      - kind: field
+        source: surrenderAmount
+        target: surrenderValue
+        cast: currency
+      - kind: constant
+        target: status
+        value: surrendered
+
+  - operation_id: policy.quote.calculate
+    description: Rating call for a Sapiens product.
+    to_vendor:
+      - kind: field
+        source: productCode
+        target: productCode
+        cast: str
+      - kind: field
+        source: faceAmount
+        target: faceAmount
+        cast: currency
+      - kind: field
+        source: issueAge
+        target: issueAge
+        cast: int
+      - kind: field
+        source: paymentMode
+        target: billingFrequency
+        cast: str
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: attributes
+      - kind: field
+        source: basePremium
+        target: annualisedPremium
+        cast: currency
+      - kind: field
+        source: currencyCode
+        target: currency
+        cast: str
+        when_missing: skip

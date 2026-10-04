@@ -1,0 +1,1013 @@
+{
+  "name": "2 - IFRS 17 Valuation",
+  "description": "Generated from plugin2 - PAS Plugins by scripts/generate_postman.py. Do not edit by hand; regenerate instead.\n\nDefault port: 8002. Set `baseUrl` to http://localhost:8002.",
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8002"
+    },
+    {
+      "key": "tenantId",
+      "value": "demo-carrier"
+    }
+  ],
+  "item": [
+    {
+      "name": "Read operations",
+      "item": [
+        {
+          "name": "ACORD NGDS reference",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/ngds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "ngds"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS reference"
+          },
+          "response": []
+        },
+        {
+          "name": "ACORD NGDS JSON Schemas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/schemas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "schemas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS JSON Schemas"
+          },
+          "response": []
+        },
+        {
+          "name": "Published error catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/errors/catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "errors",
+                "catalog"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Published error catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Liveness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Liveness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Readiness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health",
+                "ready"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Readiness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Assumption versions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/assumptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "assumptions"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Assumption versions"
+          },
+          "response": []
+        },
+        {
+          "name": "Assumption diff",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/assumptions/diff",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "assumptions",
+                "diff"
+              ],
+              "query": [
+                {
+                  "key": "from_version",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "to_version",
+                  "value": "2",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Assumption diff"
+          },
+          "response": []
+        },
+        {
+          "name": "Assumption version",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/assumptions/:version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "assumptions",
+                ":version"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "version",
+                  "value": "1",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Assumption version"
+          },
+          "response": []
+        },
+        {
+          "name": "Grouping criteria",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/criteria",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "criteria"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Grouping criteria"
+          },
+          "response": []
+        },
+        {
+          "name": "Engine metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Engine metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "Measurement models",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/models",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "models"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Measurement models"
+          },
+          "response": []
+        },
+        {
+          "name": "List valuation runs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/valuation-runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "valuation-runs"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "List valuation runs"
+          },
+          "response": []
+        },
+        {
+          "name": "Valuation run",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/valuation-runs/:run_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "valuation-runs",
+                ":run_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "run_id",
+                  "value": "sample-run_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Valuation run"
+          },
+          "response": []
+        },
+        {
+          "name": "Disclosure tables",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/valuation-runs/:run_id/disclosure",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "valuation-runs",
+                ":run_id",
+                "disclosure"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "run_id",
+                  "value": "sample-run_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Disclosure tables"
+          },
+          "response": []
+        },
+        {
+          "name": "Export disclosure",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/valuation-runs/:run_id/disclosure/export",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "valuation-runs",
+                ":run_id",
+                "disclosure",
+                "export"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": [
+                {
+                  "key": "run_id",
+                  "value": "sample-run_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Export disclosure"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP discovery document",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/catalogue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "catalogue"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP discovery document"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP tool invocation statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP tool invocation statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Prometheus metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Prometheus metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "In-process metric snapshot",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics/snapshot",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics",
+                "snapshot"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "In-process metric snapshot"
+          },
+          "response": []
+        },
+        {
+          "name": "Tenant registry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Tenant registry"
+          },
+          "response": []
+        },
+        {
+          "name": "Build and capability information",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "version"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Build and capability information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mutating operations",
+      "item": [
+        {
+          "name": "Publish an assumption version",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/assumptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "assumptions"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nPublish an assumption version"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve an assumption version",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/assumptions/:version/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "assumptions",
+                ":version",
+                "approve"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "version",
+                  "value": "1",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nApprove an assumption version"
+          },
+          "response": []
+        },
+        {
+          "name": "Load a worked portfolio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/demo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "demo"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nLoad a worked portfolio"
+          },
+          "response": []
+        },
+        {
+          "name": "Group contracts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/groups",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "groups"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nGroup contracts"
+          },
+          "response": []
+        },
+        {
+          "name": "Measure one group",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/measure",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "measure"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nMeasure one group"
+          },
+          "response": []
+        },
+        {
+          "name": "Roll a CSM forward",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/roll-forward",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "roll-forward"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nRoll a CSM forward"
+          },
+          "response": []
+        },
+        {
+          "name": "Run a valuation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ifrs17/valuation-runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ifrs17",
+                "valuation-runs"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nRun a valuation"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

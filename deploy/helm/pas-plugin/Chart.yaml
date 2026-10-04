@@ -1,0 +1,12 @@
+apiVersion: v2
+name: pas-plugin
+description: A single PAS plugin sidecar. Deployed seven times, once per plugin.
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords: [insurance, policy-administration, pas]
+home: https://docs.pas-plugins.io
+sources: [https://github.com/pas-plugins/pas-plugins]
+maintainers:
+  - name: PAS Platform Team
+    email: platform@pas-plugins.io

@@ -1,0 +1,2363 @@
+{
+  "components": {
+    "schemas": {
+      "AcordAddress": {
+        "additionalProperties": false,
+        "description": "NGDS address block. ISO 3166-2 subdivision codes are required for US.",
+        "properties": {
+          "city": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "default": "US",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Country",
+            "type": "string"
+          },
+          "line1": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Line1",
+            "type": "string"
+          },
+          "line2": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line2"
+          },
+          "postal_code": {
+            "description": "US ZIP / ZIP+4",
+            "pattern": "^\\d{5}(-\\d{4})?$",
+            "title": "Postal Code",
+            "type": "string"
+          },
+          "state": {
+            "description": "US state or territory code, e.g. 'NY'.",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "postal_code"
+        ],
+        "title": "Address",
+        "type": "object"
+      },
+      "AcordBeneficiaryAllocation": {
+        "additionalProperties": false,
+        "description": "Beneficiary share with the multi-signature approval state.",
+        "properties": {
+          "approval_did": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "W3C DID of the approving credential holder.",
+            "title": "Approval Did"
+          },
+          "approved": {
+            "default": false,
+            "title": "Approved",
+            "type": "boolean"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Approved At"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "Relationship",
+            "type": "string"
+          },
+          "share_percent": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Share Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship",
+          "share_percent"
+        ],
+        "title": "BeneficiaryAllocation",
+        "type": "object"
+      },
+      "AcordContact": {
+        "additionalProperties": false,
+        "description": "Contact point per NGDS party model.",
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "maxLength": 254,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Email"
+          },
+          "preferred_channel": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Channel"
+          },
+          "telephone": {
+            "anyOf": [
+              {
+                "pattern": "^\\+?[0-9]{10,15}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Telephone"
+          }
+        },
+        "title": "Contact",
+        "type": "object"
+      },
+      "AcordCoverage": {
+        "additionalProperties": false,
+        "description": "A single coverage/rider on a policy.",
+        "properties": {
+          "benefit_period_months": {
+            "anyOf": [
+              {
+                "maximum": 11,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Months"
+          },
+          "benefit_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Period Years"
+          },
+          "coverage_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Coverage Id",
+            "type": "string"
+          },
+          "coverage_type": {
+            "$ref": "#/$defs/CoverageType"
+          },
+          "face_amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Face Amount"
+          },
+          "is_guaranteed": {
+            "default": true,
+            "title": "Is Guaranteed",
+            "type": "boolean"
+          },
+          "is_rider": {
+            "default": false,
+            "title": "Is Rider",
+            "type": "boolean"
+          },
+          "premium_period_years": {
+            "anyOf": [
+              {
+                "maximum": 80,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium Period Years"
+          },
+          "premium_to_age": {
+            "anyOf": [
+              {
+                "maximum": 120,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Premium To Age"
+          },
+          "rate_class": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rate Class"
+          },
+          "waiting_period_months": {
+            "anyOf": [
+              {
+                "maximum": 60,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Waiting Period Months"
+          }
+        },
+        "required": [
+          "coverage_id",
+          "coverage_type"
+        ],
+        "title": "Coverage",
+        "type": "object"
+      },
+      "AcordLifeEvent": {
+        "additionalProperties": false,
+        "description": "A policy or coverage level event (issue, change, lapse, surrender...).",
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Amount"
+          },
+          "effective_date": {
+            "format": "date",
+            "title": "Effective Date",
+            "type": "string"
+          },
+          "event_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Event Type",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          },
+          "source_system": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Source System"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "active"
+          }
+        },
+        "required": [
+          "event_id",
+          "event_type",
+          "effective_date"
+        ],
+        "title": "LifeEvent",
+        "type": "object"
+      },
+      "AcordPerson": {
+        "additionalProperties": false,
+        "description": "An individual party. ``ssn_last4`` only - full SSNs never transit this suite.",
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Address"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "contact": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Contact"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "date_of_birth": {
+            "format": "date",
+            "title": "Date Of Birth",
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "First Name",
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/$defs/Gender",
+            "default": "U"
+          },
+          "last_name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Last Name",
+            "type": "string"
+          },
+          "middle_name": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Middle Name"
+          },
+          "party_id": {
+            "description": "Carrier-assigned party identifier.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "preferred_language": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Preferred Language"
+          },
+          "ssn_last4": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ssn Last4"
+          },
+          "suffix": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Suffix"
+          },
+          "tobacco_use": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required for mortality-rated life products.",
+            "title": "Tobacco Use"
+          }
+        },
+        "required": [
+          "party_id",
+          "first_name",
+          "last_name",
+          "date_of_birth"
+        ],
+        "title": "Person",
+        "type": "object"
+      },
+      "AcordPolicy": {
+        "additionalProperties": false,
+        "description": "The canonical life/annuity contract record.",
+        "properties": {
+          "annualised_premium": {
+            "default": 0.0,
+            "minimum": 0,
+            "title": "Annualised Premium",
+            "type": "number"
+          },
+          "coverages": {
+            "items": {
+              "$ref": "#/$defs/Coverage"
+            },
+            "title": "Coverages",
+            "type": "array"
+          },
+          "currency": {
+            "default": "USD",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/$defs/LifeEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "expiration_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expiration Date"
+          },
+          "face_amount": {
+            "description": "Sum assured / accumulation value base.",
+            "minimum": 0,
+            "title": "Face Amount",
+            "type": "number"
+          },
+          "issue_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Issue Date"
+          },
+          "lob": {
+            "default": "Life",
+            "description": "Line of business label.",
+            "maxLength": 40,
+            "title": "Lob",
+            "type": "string"
+          },
+          "master_group": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Master Group"
+          },
+          "parties": {
+            "items": {
+              "$ref": "#/$defs/RoleAssignment"
+            },
+            "title": "Parties",
+            "type": "array"
+          },
+          "payment_mode": {
+            "$ref": "#/$defs/PaymentMode",
+            "default": "monthly"
+          },
+          "policy_id": {
+            "description": "Carrier policy number.",
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "product_code": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Product Code",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "state_of_issue": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "State Of Issue",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/$defs/PolicyStatus",
+            "default": "quoted"
+          },
+          "total_face_amount": {
+            "default": 0.0,
+            "description": "Aggregate face amount.",
+            "minimum": 0,
+            "title": "Total Face Amount",
+            "type": "number"
+          },
+          "valuation_method": {
+            "$ref": "#/$defs/ValuationMethod",
+            "default": "modifiedActuarial"
+          }
+        },
+        "required": [
+          "policy_id",
+          "product_id",
+          "product_code",
+          "face_amount",
+          "state_of_issue"
+        ],
+        "title": "Policy",
+        "type": "object"
+      },
+      "AcordRoleAssignment": {
+        "additionalProperties": false,
+        "description": "Binds a party to a contract in a specific role.",
+        "properties": {
+          "benefit_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Benefit Percent"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Effective Date"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "party_id": {
+            "pattern": "^[A-Z0-9][A-Z0-9\\-_/]{1,34}[A-Z0-9]$",
+            "title": "Party Id",
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "#/$defs/Relationship"
+          },
+          "share_percent": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Share Percent"
+          },
+          "term_years": {
+            "anyOf": [
+              {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Term Years"
+          }
+        },
+        "required": [
+          "party_id",
+          "relationship"
+        ],
+        "title": "RoleAssignment",
+        "type": "object"
+      },
+      "AcordTransactionEnvelope": {
+        "additionalProperties": true,
+        "description": "The NGDS ``ACORD`` request/response envelope.\n\nLayout follows the standard's ``requestMessage`` / ``responseMessage``\nstructure: a header, an optional status block and one or more content\nobjects, plus vendor extensions carried under ``Extension``.",
+        "properties": {
+          "ACORDVersion": {
+            "default": "NGDS-LA-6.0",
+            "title": "Acordversion",
+            "type": "string"
+          },
+          "BusinessAreaCode": {
+            "default": "01",
+            "title": "Businessareacode",
+            "type": "string"
+          },
+          "Content": {
+            "additionalProperties": true,
+            "title": "Content",
+            "type": "object"
+          },
+          "Extension": {
+            "additionalProperties": true,
+            "title": "Extension",
+            "type": "object"
+          },
+          "MessageDateTime": {
+            "description": "ISO-8601 timestamp. NGDS uses UTC with an explicit offset.",
+            "title": "Messagedatetime",
+            "type": "string"
+          },
+          "MessageID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Messageid",
+            "type": "string"
+          },
+          "ReceiverID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Receiverid",
+            "type": "string"
+          },
+          "SecurityLevel": {
+            "default": 1,
+            "maximum": 9,
+            "minimum": 0,
+            "title": "Securitylevel",
+            "type": "integer"
+          },
+          "SenderID": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Senderid",
+            "type": "string"
+          },
+          "StandardVersion": {
+            "default": "6.0.0",
+            "title": "Standardversion",
+            "type": "string"
+          },
+          "Status": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Status"
+          },
+          "TestMode": {
+            "default": false,
+            "title": "Testmode",
+            "type": "boolean"
+          },
+          "TransactionSet": {
+            "default": "TX",
+            "title": "Transactionset",
+            "type": "string"
+          },
+          "TransactionTypeCode": {
+            "maxLength": 8,
+            "minLength": 5,
+            "title": "Transactiontypecode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "SenderID",
+          "ReceiverID",
+          "MessageID",
+          "TransactionTypeCode",
+          "MessageDateTime"
+        ],
+        "title": "TransactionEnvelope",
+        "type": "object"
+      },
+      "ErrorCatalogEntry": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "type": "integer"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "httpStatus",
+          "title",
+          "description",
+          "retryable"
+        ],
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Problem": {
+        "description": "RFC 9457 problem details with the PAS error catalogue.",
+        "properties": {
+          "catalog_description": {
+            "type": "string"
+          },
+          "code": {
+            "examples": [
+              "PAS-400-VALIDATION"
+            ],
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "errors": {
+            "additionalProperties": true,
+            "description": "Field-level validation detail, when applicable.",
+            "type": "object"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "status": {
+            "maximum": 599,
+            "minimum": 100,
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "code"
+        ],
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "description": "Development and service API key. Not for production traffic.",
+        "in": "header",
+        "name": "X-API-Key",
+        "type": "apiKey"
+      },
+      "oauth2_authorization_code_pkce": {
+        "description": "Interactive user login with PKCE.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://id.pas.example/authorize",
+            "refreshUrl": "https://id.pas.example/token",
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "oauth2_client_credentials": {
+        "description": "Machine-to-machine access for service accounts.",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {
+              "admin:read": "Grants admin:read.",
+              "admin:write": "Grants admin:write.",
+              "data:read": "Grants data:read.",
+              "data:write": "Grants data:write.",
+              "distribution:kyc": "Grants distribution:kyc.",
+              "distribution:publish": "Grants distribution:publish.",
+              "distribution:read": "Grants distribution:read.",
+              "distribution:write": "Grants distribution:write.",
+              "ifrs17:read": "Grants ifrs17:read.",
+              "ifrs17:write": "Grants ifrs17:write.",
+              "insurance:read": "Grants insurance:read.",
+              "insurance:write": "Grants insurance:write.",
+              "ledger:read": "Grants ledger:read.",
+              "ledger:write": "Grants ledger:write.",
+              "products:publish": "Grants products:publish.",
+              "products:read": "Grants products:read.",
+              "products:write": "Grants products:write.",
+              "uw:kyc": "Grants uw:kyc.",
+              "uw:override": "Grants uw:override.",
+              "uw:read": "Grants uw:read.",
+              "uw:submit": "Grants uw:submit.",
+              "workflow:write": "Grants workflow:write."
+            },
+            "tokenUrl": "https://id.pas.example/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "tenantHeader": {
+        "description": "Tenant identifier header. The resolved tenant is compared against the token's tenant claim; a mismatch is rejected before routing.",
+        "in": "header",
+        "name": "PAS_TENANT_HEADER",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Blockchain-Based Policy Lifecycle Layer.\n\n**Problem.** Policy records fragment. A policy is issued by one system, amended by another and serviced by a third, and when a carrier migrates platforms the beneficiary history is what gets lost. That produces slow beneficiary updates, unreconstructable annuity positions, and an assurance file nobody can prove.\n\n**What this is, precisely.** A real hash chain over policy events, a real Merkle tree per block, real Ed25519 signatures on identities, and a real endorsement policy: a transaction commits only once the organisations its channel policy names have signed it. What it is *not* is a Fabric gateway - Fabric is the deployment target and `LedgerBackend` is where it plugs in - and it does not use proof of work, because a permissioned network with named endorsers does not need one. What a carrier is buying is tamper-evidence and joint endorsement, not public-chain consensus, and pretending otherwise would be a worse design than the real thing.\n\n**Capabilities.** Policy lifecycle with legal-transition enforcement; beneficiary changes requiring multi-signature and recorded consent; annuity drawdown schedules whose obligation is recorded before any payment; W3C-style DIDs and verifiable credentials for beneficiaries; and signed portability packages another carrier can verify without trusting this ledger.\n\nQuery endpoints live under `/blockchain/v1`. The same capabilities are exposed as MCP tools over streamable HTTP at `/mcp`.",
+    "title": "plugin7 - PAS Plugins",
+    "version": "1.0.0",
+    "x-acord-ngds": {
+      "sourceRef": "https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards",
+      "standardVersion": "6.0.0",
+      "transactionCodes": 40
+    },
+    "x-mcp": {
+      "path": "/mcp",
+      "server": "pas-policy-ledger",
+      "toolCount": 13,
+      "transport": "streamable-http"
+    },
+    "x-pas-plugin": "plugin7",
+    "x-pas-plugin-version": "1.0.0",
+    "x-pas-suite-version": "1.0.0",
+    "x-security-schemes": [
+      "oauth2_authorization_code_pkce",
+      "oauth2_client_credentials",
+      "apiKey"
+    ]
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/acord/ngds": {
+      "get": {
+        "description": "ACORD NGDS transaction code registry for Life and Annuity business.",
+        "operationId": "platform.acordRegistry",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordregistry",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS reference",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/acord/schemas": {
+      "get": {
+        "description": "Draft 2020-12 JSON Schemas for every canonical NGDS entity.",
+        "operationId": "platform.acordSchemas",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Acordschemas",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "ACORD NGDS JSON Schemas",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/blockchain/v1/annuity-entries/{entry_id}/pay": {
+      "post": {
+        "description": "Mark a scheduled drawdown paid. Paying twice is refused.",
+        "operationId": "ledger.payAnnuityEntry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "entry_id",
+            "required": true,
+            "schema": {
+              "title": "Entry Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Payannuityentry",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Record an annuity payout",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/beneficiary-changes/{request_id}/apply": {
+      "post": {
+        "description": "Apply a change that has reached quorum, and record it permanently.",
+        "operationId": "ledger.applyBeneficiaryChange",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "request_id",
+            "required": true,
+            "schema": {
+              "title": "Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Applybeneficiarychange",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Apply an approved beneficiary change",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/beneficiary-changes/{request_id}/endorse": {
+      "post": {
+        "description": "Add one organisation's approval. Quorum is required before it can apply.",
+        "operationId": "ledger.endorseBeneficiaryChange",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "request_id",
+            "required": true,
+            "schema": {
+              "title": "Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Endorsebeneficiarychange",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Approve a beneficiary change",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/blocks": {
+      "get": {
+        "description": "Block headers with their hash links, Merkle roots and anchor receipts.",
+        "operationId": "ledger.blocks",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Blocks",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Committed blocks",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/claims/{claim_id}": {
+      "get": {
+        "description": "A claim and whether it needed manual approval.",
+        "operationId": "ledger.getClaim",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "claim_id",
+            "required": true,
+            "schema": {
+              "title": "Claim Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Getclaim",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Claim state",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/claims/{claim_id}/approve": {
+      "post": {
+        "description": "Approve a claim. Approving more than was requested is refused.",
+        "operationId": "ledger.approveClaim",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "claim_id",
+            "required": true,
+            "schema": {
+              "title": "Claim Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Approveclaim",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Approve and pay a claim",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/claims/{claim_id}/decline": {
+      "post": {
+        "description": "Decline a claim, with the reason recorded on the ledger.",
+        "operationId": "ledger.declineClaim",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "claim_id",
+            "required": true,
+            "schema": {
+              "title": "Claim Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Declineclaim",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Decline a claim",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/events/{event_id}/proof": {
+      "get": {
+        "description": "Prove an event is in a block, verifiable against the block's Merkle root.",
+        "operationId": "ledger.eventProof",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "event_id",
+            "required": true,
+            "schema": {
+              "title": "Event Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Eventproof",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Merkle inclusion proof for an event",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/health/detailed": {
+      "get": {
+        "description": "Counts and the current chain-trust position.",
+        "operationId": "ledger.inventory",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Inventory",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Ledger inventory",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/identity/credentials": {
+      "post": {
+        "description": "Issue an Ed25519-signed credential about a subject.",
+        "operationId": "ledger.issueCredential",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Issuecredential",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Issue a verifiable credential",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/identity/credentials/verify": {
+      "post": {
+        "description": "Check signature, issuer, expiry and revocation, naming whichever failed.",
+        "operationId": "ledger.verifyCredential",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Verifycredential",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Verify a verifiable credential",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/identity/{did}": {
+      "get": {
+        "description": "A DID document with its verification methods.",
+        "operationId": "ledger.resolveDid",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "did",
+            "required": true,
+            "schema": {
+              "title": "Did",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Resolvedid",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resolve a DID",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/network": {
+      "get": {
+        "description": "The organisations on the channel and their roles.\n\nRoles matter because they determine who may endorse: a regulator on this\nchannel observes and cannot write.",
+        "operationId": "ledger.network",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Network",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Network participants and channel",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/packages/verify": {
+      "post": {
+        "description": "Verify an export without trusting the ledger that produced it.",
+        "operationId": "ledger.verifyPackage",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Verifypackage",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Verify a portability package",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies": {
+      "get": {
+        "description": "Policies visible to the caller's tenant.",
+        "operationId": "ledger.listPolicies",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Listpolicies",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List policies",
+        "tags": [
+          "policy-ledger"
+        ]
+      },
+      "post": {
+        "description": "Issue a policy. The `issue` event is endorsed and committed immediately.",
+        "operationId": "ledger.createPolicy",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Createpolicy",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Create a policy and commit its issue event",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}": {
+      "get": {
+        "description": "The current projection of a policy.",
+        "operationId": "ledger.getPolicy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Getpolicy",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Policy state",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/annuity-position": {
+      "get": {
+        "description": "Paid and remaining withdrawals, derived from the ledger rather than a table.",
+        "operationId": "ledger.annuityPosition",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Annuityposition",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reconstruct an annuity position",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/annuity-schedule": {
+      "post": {
+        "description": "Record the payout obligation before any money moves.",
+        "operationId": "ledger.scheduleAnnuity",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Scheduleannuity",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Generate an annuity drawdown schedule",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/beneficiary-changes": {
+      "post": {
+        "description": "Record a proposed change. It takes effect only after multi-signature approval.",
+        "operationId": "ledger.requestBeneficiaryChange",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Requestbeneficiarychange",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Propose a beneficiary change",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/claims": {
+      "post": {
+        "description": "File a claim. Large claims are held for human approval automatically.",
+        "operationId": "ledger.fileClaim",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Fileclaim",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "File a claim",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/events": {
+      "post": {
+        "description": "Propose a lifecycle change; committed only once endorsed.\n\nAn illegal transition is refused with 422 and nothing is written.",
+        "operationId": "ledger.submitEvent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Submitevent",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submit a lifecycle event",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/export": {
+      "post": {
+        "description": "A signed export another carrier can import and verify independently.",
+        "operationId": "ledger.exportPackage",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Exportpackage",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Export a self-verifying portability package",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/policies/{policy_id}/history": {
+      "get": {
+        "description": "Every committed event for a policy, hash-chained and in sequence.",
+        "operationId": "ledger.policyHistory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "policy_id",
+            "required": true,
+            "schema": {
+              "title": "Policy Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Policyhistory",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Full policy history",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/transactions": {
+      "get": {
+        "description": "Transactions with their endorsements and commit status.",
+        "operationId": "ledger.transactions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Transactions",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Chaincode transactions",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/blockchain/v1/verify": {
+      "get": {
+        "description": "Recompute every hash, Merkle root and anchor receipt.\n\nThis is the endpoint a regulator or an auditor calls, and it is expected to\nsay \"not trustworthy\" when something has been altered.",
+        "operationId": "ledger.verify",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ledger.Verify",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Audit the chain",
+        "tags": [
+          "policy-ledger"
+        ]
+      }
+    },
+    "/errors/catalog": {
+      "get": {
+        "description": "The full, stable error code catalogue so clients can branch on codes.",
+        "operationId": "platform.errorCatalog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Errorcatalog",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Published error catalogue",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Liveness probe. Never touches the database so it cannot produce a false negative.",
+        "operationId": "platform.health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Health",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Liveness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "description": "Readiness probe: checks that the tenant registry and MCP server are usable.",
+        "operationId": "platform.ready",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Ready",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness probe",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/catalogue": {
+      "get": {
+        "description": "Tools, resources and prompts this plugin exposes over MCP.\n\nAn agent that cannot speak MCP can still read this document and call the\nequivalent REST endpoints.",
+        "operationId": "platform.mcpCatalogue",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpcatalogue",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP discovery document",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/mcp/stats": {
+      "get": {
+        "operationId": "platform.mcpStats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Mcpstats",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "MCP tool invocation statistics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics": {
+      "get": {
+        "description": "Prometheus text exposition format.",
+        "operationId": "platform.metrics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Prometheus metrics",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/metrics/snapshot": {
+      "get": {
+        "description": "Metric snapshot used by the Svelte management UI when Prometheus is not reachable.",
+        "operationId": "platform.metricsSnapshot",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Metricssnapshot",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "In-process metric snapshot",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/tenants": {
+      "get": {
+        "description": "Tenants visible to the caller. Cross-tenant reads are refused, not just hidden.",
+        "operationId": "platform.listTenants",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Listtenants",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tenant registry",
+        "tags": [
+          "platform"
+        ]
+      }
+    },
+    "/version": {
+      "get": {
+        "description": "Version, enabled plugins and the connected PAS vendors.",
+        "operationId": "platform.version",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Platform.Version",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Build and capability information",
+        "tags": [
+          "platform"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_authorization_code_pkce": [],
+      "tenantHeader": []
+    },
+    {
+      "oauth2_client_credentials": [],
+      "tenantHeader": []
+    },
+    {
+      "apiKey": [],
+      "tenantHeader": []
+    }
+  ],
+  "tags": [
+    {
+      "description": "Lifecycle, beneficiaries, claims, annuities, identity",
+      "name": "policy-ledger"
+    },
+    {
+      "description": "Health, discovery and governance",
+      "name": "platform"
+    }
+  ]
+}

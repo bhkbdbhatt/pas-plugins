@@ -1,0 +1,290 @@
+# =============================================================================
+#  Majesco LifePlus translation profile
+# -----------------------------------------------------------------------------
+#  Canonical  <->  LifePlus dialect.
+#  LifePlus transaction services speak lowercase JSON but use different casing
+#  (`policyNumber` vs `policyId`), comma-formatted amounts, MM/DD/YYYY dates and
+#  capitalised status codes. The batch/document services expect XML, which this
+#  profile converts *from* canonical JSON before the gateway renders it.
+# =============================================================================
+vendor: majesco-lifeplus
+display_name: Majesco LifePlus (Life)
+version: "1.2.0"
+description: >-
+  LifePlus translation profile covering transaction, batch and document services.
+  Amounts become formatted strings, dates become MM/DD/YYYY and policy statuses
+  map to LifePlus's capitalised codes.
+source_ref: https://www.majesco.com/
+
+defaults:
+  requestorId: pas-plugins-gateway
+  systemOfRecord: LifePlus
+
+operations:
+  - operation_id: policy.get
+    description: Retrieve a policy record by policy number.
+    to_vendor:
+      - kind: require
+        source: policyId
+        description: LifePlus identifies policies by PolicyNumber.
+        when_missing: error
+      - kind: field
+        source: policyId
+        target: policyNumber
+        cast: str
+      - kind: field
+        source: includeHistory
+        target: includeHistoryIndicator
+        cast: bool
+        when_missing: skip
+    from_vendor:
+      - kind: field
+        source: policyNumber
+        target: policyId
+        cast: str
+      - kind: enum
+        source: policyStatus
+        target: status
+        mapping:
+          inforce: active
+          "In Force": active
+          grace: lapsed
+          GracePeriod: lapsed
+          lapsed: lapsed
+          terminated: terminated
+          cancelled: terminated
+          expired: expired
+          paidUp: paid_up
+          surrendered: surrendered
+        when_missing: error
+      - kind: field
+        source: issueDate
+        target: issueDate
+        cast: date
+        when_missing: skip
+      - kind: field
+        source: effectiveDate
+        target: effectiveDate
+        cast: date
+        when_missing: skip
+      - kind: field
+        source: faceAmount
+        target: faceAmount
+        cast: currency
+        when_missing: skip
+      - kind: field
+        source: annualisedPremium
+        target: annualisedPremium
+        cast: currency
+        when_missing: skip
+
+  - operation_id: policy.quote.calculate
+    description: Rate a prospective policy.
+    to_vendor:
+      - kind: require
+        source: productCode
+        description: LifePlus rating requires the product code.
+        when_missing: error
+      - kind: field
+        source: issueAge
+        target: issueAge
+        cast: int
+      - kind: field
+        source: tobacco
+        target: tobaccoIndicator
+        cast: bool
+      - kind: field
+        source: faceAmount
+        target: requestedFaceAmount
+        cast: currency
+      - kind: enum
+        source: paymentMode
+        target: billingFrequency
+        mapping:
+          monthly: MTHLY
+          quarterly: QTRLY
+          semiAnnual: SEMIANL
+          annual: ANNLY
+          single: SINGLE
+        when_missing: skip
+    from_vendor:
+      - kind: field
+        source: monthlyPremium
+        target: periodicPremium
+        cast: float
+      - kind: field
+        source: annualPremium
+        target: annualisedPremium
+        cast: float
+      - kind: constant
+        target: currency
+        value: USD
+
+  - operation_id: policy.quote.create
+    description: Persist a quote in LifePlus so it can be retrieved later.
+    to_vendor:
+      - kind: wrap
+        path: document.payload
+        description: The document service wraps content in an XML-ready payload node.
+      - kind: field
+        source: document.payload.productCode
+        target: document.payload.productCode
+        cast: str
+    from_vendor:
+      - kind: unwrap
+        path: document.payload
+      - kind: field
+        source: quoteNumber
+        target: quoteId
+        cast: str
+      - kind: field
+        source: quoteExpires
+        target: expiresAt
+        cast: date
+        when_missing: skip
+
+  - operation_id: policy.bind
+    description: Issue a policy from an accepted quote.
+    to_vendor:
+      - kind: require
+        source: quoteId
+        description: LifePlus issues from a persisted quote number.
+        when_missing: error
+      - kind: field
+        source: quoteId
+        target: quoteNumber
+        cast: str
+      - kind: field
+        source: effectiveDate
+        target: proposedEffectiveDate
+        cast: date
+      - kind: enum
+        source: payor
+        target: payorCode
+        mapping:
+          applicant: APPLICANT
+          owner: OWNER
+          insured: INSURED
+          thirdParty: THIRDPARTY
+        when_missing: skip
+    from_vendor:
+      - kind: field
+        source: issuedPolicyNumber
+        target: policyId
+        cast: str
+      - kind: field
+        source: issueDate
+        target: issuedAt
+        cast: date
+      - kind: enum
+        source: issueStatus
+        target: status
+        mapping:
+          issued: issued
+          pendingIssue: accepted
+          rejected: declined
+        when_missing: skip
+
+  - operation_id: policy.beneficiary.update
+    description: Replace the beneficiary schedule.
+    to_vendor:
+      - kind: field
+        source: allocations
+        target: beneficiaries
+      - kind: map_array
+        source: allocations
+        target: beneficiaries
+        rules:
+          - kind: field
+            source: partyId
+            target: partyNumber
+            cast: str
+          - kind: enum
+            source: relationship
+            target: relationshipCode
+            mapping:
+              beneficiary: BENE
+              contingentBeneficiary: CBENE
+              spouse: SPOUSE
+              child: CHILD
+              parent: PARENT
+            when_missing: skip
+          - kind: field
+            source: sharePercent
+            target: sharePercent
+            cast: float
+      - kind: drop
+        source: approvals
+        description: LifePlus has no multi-signature approval concept.
+    from_vendor:
+      - kind: field
+        source: beneficiaries
+        target: allocations
+      - kind: map_array
+        source: beneficiaries
+        target: allocations
+        rules:
+          - kind: field
+            source: partyNumber
+            target: partyId
+            cast: str
+          - kind: enum
+            source: relationshipCode
+            target: relationship
+            mapping:
+              BENE: beneficiary
+              CBENE: contingentBeneficiary
+              SPOUSE: spouse
+              CHILD: child
+              PARENT: parent
+            when_missing: skip
+          - kind: field
+            source: sharePercent
+            target: sharePercent
+            cast: float
+
+  - operation_id: policy.lapse
+    description: Lapse a policy for non-payment.
+    to_vendor:
+      - kind: constant
+        target: lapseReasonCode
+        value: NONPAYMENT
+      - kind: field
+        source: effectiveDate
+        target: lapseDate
+        cast: date
+    from_vendor:
+      - kind: enum
+        source: statusAfter
+        target: status
+        mapping:
+          lapsed: lapsed
+          gracePeriod: lapsed
+          reinstated: active
+        when_missing: error
+
+  - operation_id: policy.surrender
+    description: Surrender a policy and pay out the surrender value.
+    to_vendor:
+      - kind: enum
+        source: reason
+        target: surrenderReasonCode
+        mapping:
+          customerRequest: VOLUNTARY
+          premiumSurrender: PREMIUM
+          underwriting: UNDERWRITING
+          death: DEATH
+          other: OTHER
+        when_missing: skip
+      - kind: field
+        source: effectiveDate
+        target: surrenderDate
+        cast: date
+    from_vendor:
+      - kind: field
+        source: surrenderValue
+        target: surrenderValue
+        cast: currency
+      - kind: constant
+        target: status
+        value: surrendered

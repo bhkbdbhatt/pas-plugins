@@ -1,0 +1,1264 @@
+{
+  "name": "6 - Data Mesh",
+  "description": "Generated from plugin6 - PAS Plugins by scripts/generate_postman.py. Do not edit by hand; regenerate instead.\n\nDefault port: 8006. Set `baseUrl` to http://localhost:8006.",
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8006"
+    },
+    {
+      "key": "tenantId",
+      "value": "demo-carrier"
+    }
+  ],
+  "item": [
+    {
+      "name": "Read operations",
+      "item": [
+        {
+          "name": "ACORD NGDS reference",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/ngds",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "ngds"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS reference"
+          },
+          "response": []
+        },
+        {
+          "name": "ACORD NGDS JSON Schemas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/acord/schemas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acord",
+                "schemas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "ACORD NGDS JSON Schemas"
+          },
+          "response": []
+        },
+        {
+          "name": "Unified data catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "catalog"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Unified data catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Customer 360",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/customers/:customer_id/360",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "customers",
+                ":customer_id",
+                "360"
+              ],
+              "query": [
+                {
+                  "key": "purpose",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "unmask",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": [
+                {
+                  "key": "customer_id",
+                  "value": "sample-customer_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Customer 360"
+          },
+          "response": []
+        },
+        {
+          "name": "Read a golden record",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/entities/:surrogate_key",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "entities",
+                ":surrogate_key"
+              ],
+              "query": [
+                {
+                  "key": "purpose",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "unmask",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": [
+                {
+                  "key": "surrogate_key",
+                  "value": "sample-surrogate_key",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Read a golden record"
+          },
+          "response": []
+        },
+        {
+          "name": "Feature definitions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/features",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "features"
+              ],
+              "query": [
+                {
+                  "key": "tag",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Feature definitions"
+          },
+          "response": []
+        },
+        {
+          "name": "Retraining recommendation",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/features/retraining",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "features",
+                "retraining"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Retraining recommendation"
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch a feature vector",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/features/vector",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "features",
+                "vector"
+              ],
+              "query": [
+                {
+                  "key": "entity_key",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "entity_type",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "features",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Fetch a feature vector"
+          },
+          "response": []
+        },
+        {
+          "name": "Data mesh metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/governance/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "governance",
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Data mesh metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "PII policy",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/governance/pii",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "governance",
+                "pii"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "PII policy"
+          },
+          "response": []
+        },
+        {
+          "name": "Lineage graph",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/lineage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "lineage"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Lineage graph"
+          },
+          "response": []
+        },
+        {
+          "name": "OpenLineage run events",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/lineage/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "lineage",
+                "events"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "OpenLineage run events"
+          },
+          "response": []
+        },
+        {
+          "name": "Downstream impact of a dataset",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/lineage/impact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "lineage",
+                "impact"
+              ],
+              "query": [
+                {
+                  "key": "dataset",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Downstream impact of a dataset"
+          },
+          "response": []
+        },
+        {
+          "name": "Master data statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/mdm/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "mdm",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Master data statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Survivorship decisions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/mdm/survivorship",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "mdm",
+                "survivorship"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Survivorship decisions"
+          },
+          "response": []
+        },
+        {
+          "name": "Data quality report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/quality",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "quality"
+              ],
+              "query": [
+                {
+                  "key": "dataset",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Data quality report"
+          },
+          "response": []
+        },
+        {
+          "name": "Quality rule catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/quality/rules",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "quality",
+                "rules"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Quality rule catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Search golden records",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "purpose",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "entity_type",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "query",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "offset",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                },
+                {
+                  "key": "unmask",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": []
+            },
+            "description": "Search golden records"
+          },
+          "response": []
+        },
+        {
+          "name": "List ingestion sources",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/sources",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "sources"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "List ingestion sources"
+          },
+          "response": []
+        },
+        {
+          "name": "Published error catalogue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/errors/catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "errors",
+                "catalog"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Published error catalogue"
+          },
+          "response": []
+        },
+        {
+          "name": "Liveness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Liveness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "Readiness probe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health",
+                "ready"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Readiness probe"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP discovery document",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/catalogue",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "catalogue"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP discovery document"
+          },
+          "response": []
+        },
+        {
+          "name": "MCP tool invocation statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp",
+                "stats"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "MCP tool invocation statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Prometheus metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Prometheus metrics"
+          },
+          "response": []
+        },
+        {
+          "name": "In-process metric snapshot",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metrics/snapshot",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metrics",
+                "snapshot"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "In-process metric snapshot"
+          },
+          "response": []
+        },
+        {
+          "name": "Tenant registry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Tenant registry"
+          },
+          "response": []
+        },
+        {
+          "name": "Build and capability information",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/version",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "version"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Build and capability information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mutating operations",
+      "item": [
+        {
+          "name": "Apply a change-data-capture event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/changes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "changes"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nApply a change-data-capture event"
+          },
+          "response": []
+        },
+        {
+          "name": "Measure feature drift",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/features/drift",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "features",
+                "drift"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nMeasure feature drift"
+          },
+          "response": []
+        },
+        {
+          "name": "Materialise feature values",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/features/materialize",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "features",
+                "materialize"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nMaterialise feature values"
+          },
+          "response": []
+        },
+        {
+          "name": "Resolve entities into golden records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/resolve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "resolve"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nResolve entities into golden records"
+          },
+          "response": []
+        },
+        {
+          "name": "Load deterministic sample data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/sample-data",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "sample-data"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nLoad deterministic sample data"
+          },
+          "response": []
+        },
+        {
+          "name": "Ingest a batch source",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-Id",
+                "value": "{{tenantId}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/sources/:source_id/ingest",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "data",
+                "sources",
+                ":source_id",
+                "ingest"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "description": "",
+                  "disabled": false
+                }
+              ],
+              "variable": [
+                {
+                  "key": "source_id",
+                  "value": "sample-source_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "[MUTATING - review before sending]\n\nIngest a batch source"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

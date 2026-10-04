@@ -1,0 +1,310 @@
+# =============================================================================
+#  ACORD Next-Generation Data Standards - transaction code registry
+# -----------------------------------------------------------------------------
+#  DATA, NOT CODE. A standards analyst can add, correct or retire codes without
+#  a release. `TransactionTypeCode` (pas_core/acord/transaction.py) must contain
+#  a matching enum member for any code added here.
+#
+#  direction: request | response
+#  businessArea: 01 Life, 02 Annuity, 03 Group Life, 09 Financial Services,
+#                14 Regulatory Reporting
+#  legacySynonyms: names used by older vendor documents (Majesco, OIPA, EIS,
+#                  McCamish, ALIP, Sapiens) mapped onto the canonical code.
+#
+#  Verify every entry against the current published standard before certifying
+#  a carrier integration; `sourceRef` records where the catalogue comes from.
+# =============================================================================
+standardVersion: "6.0.0"
+
+transactions:
+  # --- TX-0xx shared ------------------------------------------------------
+  TX-002:
+    name: Party Transaction
+    businessArea: "09"
+    direction: request
+    description: >-
+      Create or maintain a party record (individual, organisation or group) used
+      as the owner, insured, beneficiary or payer on a life or annuity contract.
+    legacySynonyms: [PartyMaster, PartyMaintenance]
+  TX-003:
+    name: Product Transaction
+    businessArea: "09"
+    direction: request
+    description: >-
+      Register or amend a product definition, including rating factors, coverage
+      structures, eligibility rules and commission schedules.
+    legacySynonyms: [ProductDefinition, ProductSetup]
+
+  # --- TX-1xx individual life --------------------------------------------
+  TX-101:
+    name: Life Insurance Application Submission
+    businessArea: "01"
+    direction: request
+    description: >-
+      Submit an individual life insurance application for underwriting. Carries
+      applicant, proposed insured, agent, plan and requested face amount.
+    legacySynonyms: [LifeAppSubmission, ApplicationSubmission]
+  TX-102:
+    name: Life Insurance Application Acceptance
+    businessArea: "01"
+    direction: response
+    description: >-
+      Acknowledgement that an application was accepted for further processing.
+    legacySynonyms: [LifeAppAcceptance]
+  TX-103:
+    name: Life Insurance Application Decision
+    businessArea: "01"
+    direction: response
+    description: >-
+      Underwriting decision on an individual life application: accept, decline or
+      refer, with reason codes and offer terms. This is the transaction exposed
+      by the AUW workbench decision API.
+    legacySynonyms: [LifeAppDecision, UWDecision]
+  TX-104:
+    name: Life Insurance Application Status
+    businessArea: "01"
+    direction: response
+    description: Current processing status and outstanding-requirement list.
+    legacySynonyms: [LifeAppStatus]
+  TX-105:
+    name: Individual Life Policy Issue
+    businessArea: "01"
+    direction: request
+    description: >-
+      Convert an accepted application into an issued in-force policy. Carries
+      policy number, effective date, coverage schedules and premium amounts.
+    legacySynonyms: [PolicyIssue, PolicyIssueRequest]
+  TX-106:
+    name: Individual Life Policy Transaction
+    businessArea: "01"
+    direction: request
+    description: >-
+      Generic servicing transaction against an in-force life policy (mode change,
+      face amount change, class change, address update).
+    legacySynonyms: [PolicyTransaction, PolicyServiceRequest]
+  TX-107:
+    name: Individual Life Policy Status Inquiry
+    businessArea: "01"
+    direction: request
+    description: Request the current status of an in-force life policy.
+    legacySynonyms: [PolicyStatusRequest, PolicyInquiry]
+  TX-108:
+    name: Individual Life Policy Status Response
+    businessArea: "01"
+    direction: response
+    description: Status response for a life policy status inquiry.
+    legacySynonyms: [PolicyStatusResponse]
+  TX-109:
+    name: Individual Life Policy Transaction Response
+    businessArea: "01"
+    direction: response
+    description: Acknowledgement and result of a life policy servicing transaction.
+    legacySynonyms: [PolicyTransactionResponse]
+  TX-114:
+    name: Individual Life Policy Service Request
+    businessArea: "01"
+    direction: request
+    description: >-
+      Channel-agnostic servicing request used by embedded distribution to trigger
+      servicing events on an in-force policy.
+    legacySynonyms: [ServiceRequest, PolicyService]
+  TX-115:
+    name: Individual Life Policy Service Response
+    businessArea: "01"
+    direction: response
+    description: Result of a servicing service request, including effective dates.
+    legacySynonyms: [ServiceResponse]
+  TX-116:
+    name: Individual Life Policy Loan Transaction
+    businessArea: "01"
+    direction: request
+    description: >-
+      Policy loan request or advance against the cash value of an in-force
+      life policy.
+    legacySynonyms: [PolicyLoanRequest]
+  TX-117:
+    name: Individual Life Policy Loan Response
+    businessArea: "01"
+    direction: response
+    description: Policy loan decision, amounts and interest treatment.
+    legacySynonyms: [PolicyLoanResponse]
+  TX-118:
+    name: Individual Life Policy Change Request
+    businessArea: "01"
+    direction: request
+    description: >-
+      Beneficiary, ownership and coverage change request, including multi-signature
+      beneficiary approvals written to the policy lifecycle ledger.
+    legacySynonyms: [BeneficiaryChange, OwnershipChange]
+  TX-119:
+    name: Individual Life Policy Change Response
+    businessArea: "01"
+    direction: response
+    description: Confirmation of an applied policy change with effective date.
+    legacySynonyms: [ChangeResponse]
+  TX-120:
+    name: Individual Life Policy Lapse and Reinstatement
+    businessArea: "01"
+    direction: request
+    description: >-
+      Lapse or reinstate a life policy, including the free-look and reinstatement
+      window rules.
+    legacySynonyms: [LapseRequest, ReinstatementRequest]
+  TX-121:
+    name: Individual Life Policy Lapse Response
+    businessArea: "01"
+    direction: response
+    description: Confirmation of lapse or reinstatement with the resulting status.
+    legacySynonyms: [LapseResponse]
+
+  # --- TX-2xx individual annuity application -------------------------------
+  TX-201:
+    name: Individual Annuity Contract Application Submission
+    businessArea: "02"
+    direction: request
+    description: >-
+      Submit an individual annuity contract application including contribution
+      schedule, payout election and suitability attestation.
+    legacySynonyms: [AnnuityAppSubmission]
+  TX-202:
+    name: Individual Annuity Contract Application Acceptance
+    businessArea: "02"
+    direction: response
+    description: Acknowledgement of acceptance of an annuity application.
+    legacySynonyms: [AnnuityAppAcceptance]
+  TX-203:
+    name: Individual Annuity Contract Application Decision
+    businessArea: "02"
+    direction: response
+    description: Underwriting or suitability decision on an annuity application.
+    legacySynonyms: [AnnuityAppDecision]
+  TX-205:
+    name: Individual Annuity Contract Issue
+    businessArea: "02"
+    direction: request
+    description: Issue an annuity contract from an accepted application.
+    legacySynonyms: [AnnuityIssue]
+  TX-206:
+    name: Individual Annuity Contract Transaction
+    businessArea: "02"
+    direction: request
+    description: Generic annuity servicing transaction (surrender, annuitisation change).
+    legacySynonyms: [AnnuityTransaction]
+  TX-207:
+    name: Individual Annuity Contract Status Inquiry
+    businessArea: "02"
+    direction: request
+    description: Request the current status of an annuity contract.
+    legacySynonyms: [AnnuityStatusRequest]
+  TX-208:
+    name: Individual Annuity Contract Status Response
+    businessArea: "02"
+    direction: response
+    description: Status response for an annuity contract status inquiry.
+    legacySynonyms: [AnnuityStatusResponse]
+  TX-214:
+    name: Individual Annuity Contract Service Request
+    businessArea: "02"
+    direction: request
+    description: Channel-agnostic annuity servicing request for embedded distribution.
+    legacySynonyms: [AnnuityServiceRequest]
+  TX-215:
+    name: Individual Annuity Contract Service Response
+    businessArea: "02"
+    direction: response
+    description: Result of an annuity servicing service request.
+    legacySynonyms: [AnnuityServiceResponse]
+
+  # --- TX-5xx annuity contract transactions ---------------------------------
+  TX-503:
+    name: Annuity Contract Transaction
+    businessArea: "02"
+    direction: request
+    description: >-
+      Annuity contract transaction such as surrender, withdrawal, annuitisation or
+      contract loan, including the resulting contract value.
+    legacySynonyms: [AnnuityContractTransaction, SurrenderRequest]
+  TX-504:
+    name: Annuity Contract Transaction Response
+    businessArea: "02"
+    direction: response
+    description: Result of an annuity contract transaction with tax and penalty detail.
+    legacySynonyms: [AnnuityTransactionResponse]
+  TX-505:
+    name: Annuity Contract Status Inquiry
+    businessArea: "02"
+    direction: request
+    description: Inquiry for annuity contract value and status detail.
+    legacySynonyms: [ContractValueRequest]
+  TX-506:
+    name: Annuity Contract Status Response
+    businessArea: "02"
+    direction: response
+    description: Annuity contract value and status detail response.
+    legacySynonyms: [ContractValueResponse]
+  TX-507:
+    name: Annuity Transaction Request
+    businessArea: "02"
+    direction: request
+    description: >-
+      Generic annuity transaction request used by workflow orchestration for
+      multi-step payout schedules.
+    legacySynonyms: [PayoutRequest]
+  TX-508:
+    name: Annuity Transaction Response
+    businessArea: "02"
+    direction: response
+    description: Response to a generic annuity transaction request.
+    legacySynonyms: [PayoutResponse]
+
+  # --- TX-8xx regulatory / statutory ---------------------------------------
+  TX-801:
+    name: SSAP Policy Data Extract
+    businessArea: "14"
+    direction: request
+    description: >-
+      Policy-level data extract used for NAIC SSAP 102 / VMAP statutory
+      reporting and state data calls.
+    legacySynonyms: [SSAPDataCall, PolicyExtract]
+  TX-802:
+    name: SSAP Valuation Data Extract
+    businessArea: "14"
+    direction: response
+    description: >-
+      Valuation result extract mapped to SSAP 102 reserve classes and risk
+      classes.
+    legacySynonyms: [ValuationExtract]
+
+  # --- TX-9xx financial / IFRS 17 ------------------------------------------
+  TX-901:
+    name: IFRS 17 Grouping Request
+    businessArea: "09"
+    direction: request
+    description: >-
+      Request assignment of contracts to groups of insurance contracts (GICs)
+      under IFRS 17 paragraph 4 grouping criteria.
+    legacySynonyms: [GICGroupingRequest]
+  TX-902:
+    name: IFRS 17 Measurement Response
+    businessArea: "09"
+    direction: response
+    description: >-
+      Initial or subsequent measurement result for a group of insurance contracts,
+      including CSM, risk adjustment, fulfilment cash flows and the measurement model.
+    legacySynonyms: [CSMMeasurementResponse]
+  TX-903:
+    name: IFRS 17 CSM Roll-Forward
+    businessArea: "09"
+    direction: request
+    description: >-
+      CSM roll-forward movement detail: opening balance, new business, interest
+      accretion, release to profit or loss and changes in fulfilment cash flows.
+    legacySynonyms: [CSMRollForward, CSMWaterfall]
+  TX-904:
+    name: IFRS 17 Disclosure Data
+    businessArea: "09"
+    direction: request
+    description: >-
+      Disclosure dataset for the IFRS 17 liability for remaining coverage and
+      liability for incurred claims roll-forward tables.
+    legacySynonyms: [DisclosureData]

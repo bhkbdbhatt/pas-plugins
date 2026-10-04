@@ -1,0 +1,99 @@
+# Values for the pas-plugin chart.
+#
+# The chart is deliberately one chart deployed seven times rather than a
+# parent chart with seven subcharts: a plugin's rollout is independent of every
+# other plugin's, so they must not share a release.
+
+replicaCount: 2
+
+image:
+  repository: ghcr.io/pas-plugins/plugin
+  tag: ""            # defaults to .Chart.AppVersion
+  pullPolicy: IfNotPresent
+
+# Which plugin this release runs. This is the only required value.
+plugin:
+  id: plugin1
+  module: pas_plugins.plugin1_gateway.main
+  port: 8001
+  scopes: ["insurance:read", "insurance:write"]
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      # No CPU limit on purpose: throttling an under-the-load validator is worse
+      # than letting it burst. Memory is limited because a leak must not take the
+      # node with it.
+      memory: 1Gi
+
+service:
+  type: ClusterIP
+  port: 8001
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: nginx
+  host: plugin1.pas.example
+  path: /
+  pathType: Prefix
+  tls:
+    enabled: false
+    secretName: pas-plugin-tls
+  annotations: {}
+
+# Authentication. OIDC is the production path; the anonymous principal exists
+# only so a local cluster can serve traffic with no identity provider.
+auth:
+  mode: oidc              # oidc | anonymous
+  issuer: https://id.pas.example
+  audience: pas-plugins
+  jwksUrl: https://id.pas.example/.well-known/jwks.json
+  # requireOIDC fails startup when the issuer cannot be reached. Left false so a
+  # cluster can come up during an IdP outage and serve cached public routes.
+  required: false
+
+tenancy:
+  header: X-Tenant-Id
+
+observability:
+  logLevel: INFO
+  logFormat: json
+  metricsPath: /metrics
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+
+persistence:
+  enabled: false
+  size: 1Gi
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+podAnnotations: {}
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 10001
+  seccompProfile:
+    type: RuntimeDefault
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+
+# Extra environment for the plugin container.
+extraEnv: []
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 70

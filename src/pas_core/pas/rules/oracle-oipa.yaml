@@ -1,0 +1,222 @@
+# =============================================================================
+#  Oracle OIPA translation profile
+# -----------------------------------------------------------------------------
+#  OIPA is effective-dated and status-driven: every service operation needs an
+#  AsOfDate, and policy status is a single-letter POLSTATUS code. Amounts are
+#  BigDecimal strings, and the REST layer wraps payloads in RequestContext.
+# =============================================================================
+vendor: oracle-oipa
+display_name: Oracle OIPA
+version: "1.1.0"
+description: >-
+  OIPA translation profile for effective-dated service operations with
+  single-letter policy status codes and BigDecimal amounts.
+source_ref: https://www.oracle.com/industries/insurance/
+
+defaults:
+  RequestContext:
+    SourceSystem: pas-plugins-gateway
+
+operations:
+  - operation_id: policy.get
+    description: Effective-dated policy retrieval.
+    to_vendor:
+      - kind: require
+        source: asOfDate
+        description: OIPA raises INVALID_ASOF when AsOfDate is absent.
+        when_missing: default
+        default: "1970-01-01"
+      - kind: field
+        source: policyId
+        target: PolicyNumber
+        cast: str
+      - kind: field
+        source: asOfDate
+        target: AsOfDate
+        cast: date
+    from_vendor:
+      - kind: field
+        source: PolicyNumber
+        target: policyId
+        cast: str
+      - kind: enum
+        source: PolicyStatus
+        target: status
+        mapping:
+          A: active
+          L: lapsed
+          T: terminated
+          C: terminated
+          E: expired
+          P: paid_up
+          S: surrendered
+          Q: quoted
+          W: underwriting
+          R: referred
+          N: submitted
+          X: declined
+        when_missing: error
+      - kind: field
+        source: FaceAmount
+        target: faceAmount
+        cast: currency
+        when_missing: skip
+      - kind: field
+        source: IssueDate
+        target: issueDate
+        cast: date
+        when_missing: skip
+      - kind: field
+        source: EffectiveDate
+        target: effectiveDate
+        cast: date
+        when_missing: skip
+
+  - operation_id: policy.quote.calculate
+    description: Rating call against the OIPA rating engine.
+    to_vendor:
+      - kind: field
+        source: productCode
+        target: ProductCode
+        cast: str
+      - kind: field
+        source: issueAge
+        target: IssueAge
+        cast: int
+      - kind: field
+        source: faceAmount
+        target: FaceAmount
+        cast: currency
+      - kind: field
+        source: tobacco
+        target: TobaccoIndicator
+        cast: bool
+        when_missing: skip
+      - kind: enum
+        source: paymentMode
+        target: BillingFrequency
+        mapping:
+          monthly: MTH
+          quarterly: QTR
+          semiAnnual: SA
+          annual: A
+          single: S
+        when_missing: skip
+    from_vendor:
+      - kind: field
+        source: AnnualisedPremium
+        target: annualisedPremium
+        cast: float
+      - kind: field
+        source: ModalPremium
+        target: periodicPremium
+        cast: float
+      - kind: constant
+        target: currency
+        value: USD
+      - kind: field
+        source: RatingFactors
+        target: ratingFactors
+
+  - operation_id: policy.bind
+    description: Issue a contract from an accepted application.
+    to_vendor:
+      - kind: require
+        source: effectiveDate
+        description: Contract issue requires an explicit effective date.
+        when_missing: error
+      - kind: field
+        source: policyId
+        target: PolicyNumber
+        cast: str
+      - kind: field
+        source: effectiveDate
+        target: EffectiveDate
+        cast: date
+      - kind: field
+        source: annualisedPremium
+        target: AnnualisedPremium
+        cast: float
+      - kind: wrap
+        path: Return
+        description: OIPA REST responses are wrapped in a Return node.
+    from_vendor:
+      - kind: unwrap
+        path: Return
+      - kind: field
+        source: PolicyNumber
+        target: policyId
+        cast: str
+      - kind: field
+        source: IssueDate
+        target: issuedAt
+        cast: date
+      - kind: enum
+        source: PolicyStatus
+        target: status
+        mapping:
+          A: active
+          W: accepted
+          X: declined
+          N: submitted
+        when_missing: skip
+
+  - operation_id: policy.lapse
+    description: Lapse for non-payment or at the client's request.
+    to_vendor:
+      - kind: field
+        source: effectiveDate
+        target: LapseDate
+        cast: date
+      - kind: enum
+        source: reason
+        target: LapseReasonCode
+        mapping:
+          nonPayment: NONPAY
+          customerRequest: VOLUNTARY
+          underwriting: UNDERWRITING
+          other: OTHER
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: Return
+      - kind: enum
+        source: PolicyStatus
+        target: status
+        mapping:
+          L: lapsed
+          A: active
+        when_missing: error
+
+  - operation_id: policy.loan.request
+    description: Policy loan or advance request.
+    to_vendor:
+      - kind: require
+        source: amount
+        description: Loan amount is mandatory and must be positive.
+        when_missing: error
+      - kind: field
+        source: amount
+        target: LoanAmount
+        cast: currency
+      - kind: field
+        source: policyId
+        target: PolicyNumber
+        cast: str
+    from_vendor:
+      - kind: field
+        source: LoanAmount
+        target: amount
+        cast: float
+      - kind: field
+        source: LoanId
+        target: loanId
+        cast: str
+      - kind: enum
+        source: LoanStatus
+        target: status
+        mapping:
+          APPROVED: approved
+          DECLINED: declined
+          PENDING: pending
+        when_missing: skip

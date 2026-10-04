@@ -1,0 +1,119 @@
+# =============================================================================
+#  EIS / EIS Vision translation profile
+# -----------------------------------------------------------------------------
+#  EIS returns amounts as formatted strings ("1,250.00 USD"), wraps results in
+#  {"status": ..., "result": {...}} and uses snake_case throughout. Its call
+#  status and policy status share the `status` key, which this profile separates.
+# =============================================================================
+vendor: eis
+display_name: EIS / EIS Vision
+version: "1.0.1"
+description: >-
+  EIS translation profile separating call status from policy status and parsing
+  formatted amount strings.
+source_ref: https://www.eisinc.com/
+
+operations:
+  - operation_id: policy.get
+    description: Retrieve a policy from EIS.
+    to_vendor:
+      - kind: require
+        source: policyId
+        description: EIS requires the policy number.
+        when_missing: error
+      - kind: field
+        source: policyId
+        target: policy_number
+        cast: str
+    from_vendor:
+      - kind: unwrap
+        path: result
+      - kind: field
+        source: policy_number
+        target: policyId
+        cast: str
+      - kind: enum
+        source: policy_status
+        target: status
+        mapping:
+          in_force: active
+          lapsed: lapsed
+          grace_period: lapsed
+          terminated: terminated
+          expired: expired
+          paid_up: paid_up
+          surrendered: surrendered
+        when_missing: error
+      - kind: field
+        source: face_amount
+        target: faceAmount
+        cast: currency
+      - kind: field
+        source: annual_premium
+        target: annualisedPremium
+        cast: currency
+      - kind: field
+        source: issue_date
+        target: issueDate
+        cast: date
+        when_missing: skip
+
+  - operation_id: policy.cashValue.get
+    description: Cash value and surrender value projection.
+    to_vendor:
+      - kind: field
+        source: asOfDate
+        target: as_of_date
+        cast: date
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: result
+      - kind: field
+        source: cash_value
+        target: cashValue
+        cast: currency
+      - kind: field
+        source: surrender_value
+        target: surrenderValue
+        cast: currency
+      - kind: field
+        source: as_of_date
+        target: asOfDate
+        cast: date
+        when_missing: skip
+
+  - operation_id: policy.quote.calculate
+    description: EIS rating call.
+    to_vendor:
+      - kind: field
+        source: productCode
+        target: product_code
+        cast: str
+      - kind: field
+        source: faceAmount
+        target: face_amount
+        cast: currency
+      - kind: field
+        source: issueAge
+        target: issue_age
+        cast: int
+      - kind: field
+        source: tobacco
+        target: tobacco_user
+        cast: bool
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: result
+      - kind: field
+        source: modal_premium
+        target: periodicPremium
+        cast: currency
+      - kind: field
+        source: annual_premium
+        target: annualisedPremium
+        cast: currency
+      - kind: constant
+        target: currency
+        value: USD

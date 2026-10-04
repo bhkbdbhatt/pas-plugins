@@ -1,0 +1,68 @@
+# Release values for all seven plugins.
+#
+# `helm upgrade --install` each of these independently: a plugin's rollout is not
+# coupled to any other plugin's, which is the whole argument for seven sidecars
+# rather than one monolith.
+
+plugin1:
+  plugin:
+    id: plugin1
+    module: pas_plugins.plugin1_gateway.main
+    port: 8001
+  ingress:
+    enabled: true
+    host: pas.pas.example
+
+plugin2:
+  plugin:
+    id: plugin2
+    module: pas_plugins.plugin2_ifrs17.main
+    port: 8002
+  ingress:
+    enabled: true
+    host: ifrs17.pas.example
+
+plugin3:
+  plugin:
+    id: plugin3
+    module: pas_plugins.plugin3_auw.main
+    port: 8003
+  ingress:
+    enabled: true
+    host: underwriting.pas.example
+
+plugin4:
+  plugin:
+    id: plugin4
+    module: pas_plugins.plugin4_productconfig.main
+    port: 8004
+  ingress:
+    enabled: true
+    host: products.pas.example
+
+plugin5:
+  plugin:
+    id: plugin5
+    module: pas_plugins.plugin5_embedded.main
+    port: 8005
+  ingress:
+    enabled: true
+    host: distribution.pas.example
+
+plugin6:
+  plugin:
+    id: plugin6
+    module: pas_plugins.plugin6_datamesh.main
+    port: 8006
+  ingress:
+    enabled: true
+    host: data.pas.example
+
+plugin7:
+  plugin:
+    id: plugin7
+    module: pas_plugins.plugin7_blockchain.main
+    port: 8007
+  ingress:
+    enabled: true
+    host: ledger.pas.example

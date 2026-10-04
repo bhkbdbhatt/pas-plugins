@@ -1,0 +1,194 @@
+# =============================================================================
+#  McCamish NGIN translation profile
+# -----------------------------------------------------------------------------
+#  NGIN wraps every call in {"ngin": {operation, version, data}} and returns an
+#  `errors` array that is populated even on success. Coverage ordinals are
+#  zero-based and the policy aggregate nests parties under `partyRoles`.
+# =============================================================================
+vendor: mccamish-ngin
+display_name: McCamish NGIN
+version: "1.0.3"
+description: >-
+  NGIN translation profile for the ngin operation/version/data envelope and
+  the nested policy aggregate.
+source_ref: https://www.mccamish.com/
+
+defaults:
+  version: "3"
+
+operations:
+  - operation_id: policy.get
+    description: Retrieve the NGIN policy aggregate.
+    to_vendor:
+      - kind: wrap
+        path: ngin.data
+      - kind: constant
+        target: ngin.operation
+        value: policy.read
+      - kind: constant
+        target: ngin.version
+        value: "3"
+      - kind: field
+        source: policyId
+        target: ngin.data.policyNumber
+        cast: str
+    from_vendor:
+      - kind: unwrap
+        path: ngin.data
+      - kind: field
+        source: policyNumber
+        target: policyId
+        cast: str
+      - kind: enum
+        source: policyStatus
+        target: status
+        mapping:
+          in_force: active
+          active: active
+          lapsed: lapsed
+          grace_period: lapsed
+          terminated: terminated
+          expired: expired
+          paid_up: paid_up
+          surrendered: surrendered
+        when_missing: error
+      - kind: field
+        source: issueDate
+        target: issueDate
+        cast: date
+        when_missing: skip
+      - kind: field
+        source: annualPremium
+        target: annualisedPremium
+        cast: float
+        when_missing: skip
+
+  - operation_id: policy.quote.create
+    description: Persist a NGIN quote.
+    to_vendor:
+      - kind: wrap
+        path: ngin.data
+      - kind: constant
+        target: ngin.operation
+        value: quote.create
+      - kind: field
+        source: productCode
+        target: ngin.data.productCode
+        cast: str
+      - kind: field
+        source: applicant.firstName
+        target: ngin.data.applicant.firstName
+        cast: str
+        when_missing: skip
+      - kind: field
+        source: applicant.lastName
+        target: ngin.data.applicant.lastName
+        cast: str
+        when_missing: skip
+    from_vendor:
+      - kind: unwrap
+        path: ngin.data
+      - kind: field
+        source: quoteNumber
+        target: quoteId
+        cast: str
+      - kind: enum
+        source: quoteStatus
+        target: status
+        mapping:
+          created: quoted
+          expired: expired
+          converted: accepted
+          cancelled: terminated
+        when_missing: error
+
+  - operation_id: policy.bind
+    description: Convert an NGIN quote into an in-force policy.
+    to_vendor:
+      - kind: require
+        source: quoteId
+        description: NGIN requires a quote number to convert.
+        when_missing: error
+      - kind: wrap
+        path: ngin.data
+      - kind: constant
+        target: ngin.operation
+        value: quote.convert
+      - kind: field
+        source: quoteId
+        target: ngin.data.quoteNumber
+        cast: str
+      - kind: field
+        source: effectiveDate
+        target: ngin.data.effectiveDate
+        cast: date
+    from_vendor:
+      - kind: unwrap
+        path: ngin.data
+      - kind: field
+        source: policyNumber
+        target: policyId
+        cast: str
+      - kind: field
+        source: issueDate
+        target: issuedAt
+        cast: date
+      - kind: constant
+        target: status
+        value: issued
+
+  - operation_id: policy.beneficiary.update
+    description: Replace the NGIN beneficiary schedule (partyRoles).
+    to_vendor:
+      - kind: wrap
+        path: ngin.data
+      - kind: constant
+        target: ngin.operation
+        value: beneficiary.update
+      - kind: map_array
+        source: allocations
+        target: ngin.data.partyRoles
+        rules:
+          - kind: field
+            source: partyId
+            target: partyId
+            cast: str
+          - kind: enum
+            source: relationship
+            target: role
+            mapping:
+              beneficiary: BENEFICIARY
+              contingentBeneficiary: CONTINGENT
+              owner: OWNER
+              payor: PAYOR
+              insured: INSURED
+            when_missing: skip
+          - kind: field
+            source: sharePercent
+            target: percent
+            cast: float
+    from_vendor:
+      - kind: unwrap
+        path: ngin.data
+      - kind: map_array
+        source: partyRoles
+        target: allocations
+        rules:
+          - kind: field
+            source: partyId
+            target: partyId
+            cast: str
+          - kind: enum
+            source: role
+            target: relationship
+            mapping:
+              BENEFICIARY: beneficiary
+              CONTINGENT: contingentBeneficiary
+              OWNER: owner
+              PAYOR: payor
+              INSURED: insured
+            when_missing: skip
+          - kind: field
+            source: percent
+            target: sharePercent
+            cast: float

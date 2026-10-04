@@ -1,0 +1,38 @@
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Node / UI ------------------------------------------------------------
+node_modules/
+ui/**/dist/
+ui/**/.svelte-kit/
+ui/**/build/
+.npm/
+*.tsbuildinfo
+
+# --- Local state ----------------------------------------------------------
+.env
+.env.local
+*.db
+*.sqlite3
+data/
+tmp/
+logs/
+
+# --- Editors / OS ---------------------------------------------------------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

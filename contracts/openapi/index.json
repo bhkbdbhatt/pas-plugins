@@ -1,0 +1,68 @@
+{
+  "generatedBy": "scripts/export_openapi.py",
+  "plugins": {
+    "plugin1": {
+      "name": "PAS Gateway",
+      "openapi": "3.1.0",
+      "operations": 46,
+      "paths": 44,
+      "problems": [],
+      "schemas": 13,
+      "title": "plugin1 - PAS Plugins"
+    },
+    "plugin2": {
+      "name": "IFRS 17 Valuation",
+      "openapi": "3.1.0",
+      "operations": 28,
+      "paths": 26,
+      "problems": [],
+      "schemas": 13,
+      "title": "plugin2 - PAS Plugins"
+    },
+    "plugin3": {
+      "name": "AUW Workbench",
+      "openapi": "3.1.0",
+      "operations": 25,
+      "paths": 25,
+      "problems": [],
+      "schemas": 17,
+      "title": "plugin3 - PAS Plugins"
+    },
+    "plugin4": {
+      "name": "Low-Code Product Config",
+      "openapi": "3.1.0",
+      "operations": 23,
+      "paths": 23,
+      "problems": [],
+      "schemas": 13,
+      "title": "plugin4 - PAS Plugins"
+    },
+    "plugin5": {
+      "name": "Embedded Distribution",
+      "openapi": "3.1.0",
+      "operations": 26,
+      "paths": 26,
+      "problems": [],
+      "schemas": 13,
+      "title": "plugin5 - PAS Plugins"
+    },
+    "plugin6": {
+      "name": "Data Mesh",
+      "openapi": "3.1.0",
+      "operations": 34,
+      "paths": 34,
+      "problems": [],
+      "schemas": 13,
+      "title": "plugin6 - PAS Plugins"
+    },
+    "plugin7": {
+      "name": "Policy Ledger",
+      "openapi": "3.1.0",
+      "operations": 37,
+      "paths": 36,
+      "problems": [],
+      "schemas": 13,
+      "title": "plugin7 - PAS Plugins"
+    }
+  }
+}
